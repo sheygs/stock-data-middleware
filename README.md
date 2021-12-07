@@ -1,1 +1,1 @@
-# node-stock-api
+# node-stock-backend
