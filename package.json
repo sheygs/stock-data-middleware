@@ -7,7 +7,8 @@
                 "test": "jest --watch",
                 "clean": "rimraf dist",
                 "build": "npm run clean && babel ./src --out-dir ./dist",
-                "start": "nodemon --exec babel-node src/index.js"
+                "start": "npm run build && nodemon --exec babel-node dist/index.js",
+                "serve": "node dist/index.js"
         },
         "repository": {
                 "type": "git",
@@ -30,6 +31,7 @@
                 "@babel/node": "^7.16.0",
                 "@babel/preset-env": "^7.16.4",
                 "@babel/runtime": "^7.16.3",
+                "jest": "^27.4.3",
                 "nodemon": "^2.0.15",
                 "rimraf": "^3.0.2"
         },
@@ -37,7 +39,6 @@
                 "cors": "^2.8.5",
                 "dotenv": "^10.0.0",
                 "express": "^4.17.1",
-                "jest": "^27.4.3",
                 "morgan": "^1.10.0",
                 "winston": "^3.3.3"
         }
