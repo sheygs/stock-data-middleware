@@ -1,13 +1,18 @@
+import 'dotenv/config';
 import express from 'express';
+import logger from './utils/logger';
+import startUp from './startup/startup';
+import logging from './startup/logging';
+import NotFound from './middleware/404';
+
+const { PORT } = process.env;
 
 const app = express();
 
-const port = process.env.PORT || 3000;
+logging();
+startUp(app);
+app.all('*', NotFound);
 
-app.get('/', (req, res) => {
-        res.status(200).json({ status: 'success', message: 'Welcome the Stock API! ' });
-});
+const port = PORT;
 
-app.listen(port, () => console.log(`Server listening on port ${port}`));
-
-export default app;
+app.listen(port, () => logger.info(`${app.get('env')}: server App listening on PORT ${port}...`));
