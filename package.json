@@ -7,7 +7,7 @@
                 "test": "jest --testTimeout=6000 --watchAll --detectOpenHandles --verbose",
                 "clean": "rimraf dist",
                 "build": "npm run clean && babel ./src --out-dir ./dist",
-                "start": "npm run build && nodemon --exec babel-node dist/index.js",
+                "start": "npm run build && nodemon --exec babel-node src/index.js",
                 "serve": "node dist/index.js"
         },
         "repository": {
@@ -38,9 +38,12 @@
                 "supertest": "^6.1.6"
         },
         "dependencies": {
+                "axios": "^0.24.0",
                 "cors": "^2.8.5",
+                "debug": "^4.3.3",
                 "dotenv": "^10.0.0",
                 "express": "^4.17.1",
+                "helmet": "^4.6.0",
                 "morgan": "^1.10.0",
                 "winston": "^3.3.3"
         }
