@@ -1,4 +1,4 @@
-import { sendErrorResponse, sendNetworkResponse } from '../utils/sendResponse';
+import { sendErrorResponse, sendNetworkResponse } from '../utils/responseHandler';
 
 import logger from '../utils/logger';
 
@@ -18,8 +18,8 @@ const errorHandler = (error, req, res, next) => {
                 return sendErrorResponse(res, status, message);
         }
         if (error.request) {
-                isDev && logger.error(`${error.message} ${error.stack}`);
-                return sendNetworkResponse(res, 'Check your internet connection and try again.');
+                isDev && logger.error(`${error.message} \n${error.stack}`);
+                return sendNetworkResponse(res, error.message);
         }
 };
 
