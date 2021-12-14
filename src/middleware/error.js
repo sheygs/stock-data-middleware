@@ -1,4 +1,4 @@
-import { sendErrorResponse, sendNetworkResponse } from '../utils/sendResponse';
+import { sendErrorResponse, sendNetworkResponse } from '../utils/responseHandler';
 
 import logger from '../utils/logger';
 

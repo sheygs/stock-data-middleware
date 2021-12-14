@@ -1,5 +1,5 @@
-import { sendErrorResponse } from '../utils/sendResponse';
+import { sendErrorResponse } from '../utils/responseHandler';
 
-export default (req, res) => {
-        return sendErrorResponse(res, 404, `Could not find ${req.originalUrl}`);
+export const InvalidRoute = (req, res) => {
+        return sendErrorResponse(res, 404, 'Unable to find the requested endpoint url.');
 };

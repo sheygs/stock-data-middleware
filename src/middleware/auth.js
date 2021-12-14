@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import logger from '../utils/logger';
-import { sendErrorResponse } from '../utils/sendResponse';
+import { sendErrorResponse } from '../utils/responseHandler';
 
 const verifyAuth = (req, res, next) => {
         const authHeader = req.header('Authorization');
