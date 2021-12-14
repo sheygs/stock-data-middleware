@@ -1,6 +1,6 @@
-const ALLOWED_AGGREGATE_BARS_QUERY = ['limit', 'sort', 'adjusted'];
+const AGGREGATE_STOCKS_LIST_QUERIES = ['limit', 'sort', 'adjusted'];
 
-const ALLOWED_GROUPED_DAILY_BARS_QUERY = [
+const GROUPED_DAILY_STOCKS_LIST_QUERIES = [
         'limit',
         'page',
         'adjusted',
@@ -10,7 +10,7 @@ const ALLOWED_GROUPED_DAILY_BARS_QUERY = [
         'gain',
 ];
 
-const ALLOWED_DAILY_OPEN_CLOSE = ['adjusted'];
+const DAILY_OPEN_CLOSE_LIST_QUERIES = ['adjusted'];
 
 const paginate = (results, page = 1, limit = 10) => {
         const start = (page - 1) * limit;
@@ -83,13 +83,13 @@ const filterCondition = (actualValue, param) => {
 
 export {
         paginate,
-        allowedQueries,
-        ALLOWED_AGGREGATE_BARS_QUERY,
-        ALLOWED_GROUPED_DAILY_BARS_QUERY,
-        ALLOWED_DAILY_OPEN_CLOSE,
         clientQuery,
         validateQueryValues,
         handleMap,
         extractValueOperator,
         filterCondition,
+        allowedQueries,
+        AGGREGATE_STOCKS_LIST_QUERIES,
+        GROUPED_DAILY_STOCKS_LIST_QUERIES,
+        DAILY_OPEN_CLOSE_LIST_QUERIES,
 };
