@@ -4,15 +4,15 @@ import axios from 'axios';
 
 import {
         paginate,
-        ALLOWED_GROUPED_DAILY_BARS_QUERY,
-        ALLOWED_AGGREGATE_BARS_QUERY,
-        ALLOWED_DAILY_OPEN_CLOSE,
         allowedQueries,
         clientQuery,
         validateQueryValues,
         handleMap,
         extractValueOperator,
         filterCondition,
+        AGGREGATE_STOCKS_LIST_QUERIES,
+        GROUPED_DAILY_STOCKS_LIST_QUERIES,
+        DAILY_OPEN_CLOSE_LIST_QUERIES,
 } from '../utils/helper';
 
 import { sendErrorResponse, sendSuccessResponse } from '../utils/responseHandler';
@@ -24,7 +24,7 @@ const { BASE_URL } = process.env;
 const aggregateStocks = asyncMiddleware(async (req, res) => {
         const { tickerId, multiplier, timespan, from, to } = req.params;
 
-        const isValid = allowedQueries(ALLOWED_AGGREGATE_BARS_QUERY, req.query);
+        const isValid = allowedQueries(AGGREGATE_STOCKS_LIST_QUERIES, req.query);
 
         if (!isValid) return sendErrorResponse(res, 400, 'Invalid query syntax');
 
@@ -63,7 +63,7 @@ const groupedDailyStocks = asyncMiddleware(async (req, res) => {
 
         let { page = 1, limit = 10, adjusted, cost, percentPer, gain, name } = req.query;
 
-        const isValid = allowedQueries(ALLOWED_GROUPED_DAILY_BARS_QUERY, req.query);
+        const isValid = allowedQueries(GROUPED_DAILY_STOCKS_LIST_QUERIES, req.query);
 
         if (!isValid) return sendErrorResponse(res, 400, 'Invalid Query');
 
@@ -88,7 +88,7 @@ const groupedDailyStocks = asyncMiddleware(async (req, res) => {
                 }
         );
 
-        logger.info(`Response Code Returned: ${status}`);
+        logger.info(`Response Code: ${status}`);
 
         let results = data.results.map(handleMap);
 
@@ -140,7 +140,7 @@ const groupedDailyStocks = asyncMiddleware(async (req, res) => {
 const getDailyOpenCloseStocks = asyncMiddleware(async (req, res) => {
         const { date, ticker } = req.params;
 
-        const isValid = allowedQueries(ALLOWED_DAILY_OPEN_CLOSE, req.query);
+        const isValid = allowedQueries(DAILY_OPEN_CLOSE_LIST_QUERIES, req.query);
 
         if (!isValid) return sendErrorResponse(res, 400, 'Invalid query syntax');
 
@@ -163,7 +163,7 @@ const getDailyOpenCloseStocks = asyncMiddleware(async (req, res) => {
 const getPreviousCloseStocks = asyncMiddleware(async (req, res) => {
         const { ticker } = req.params;
 
-        const isValid = allowedQueries(ALLOWED_DAILY_OPEN_CLOSE, req.query);
+        const isValid = allowedQueries(DAILY_OPEN_CLOSE_LIST_QUERIES, req.query);
 
         if (!isValid) return sendErrorResponse(res, 400, 'Invalid query syntax');
 
