@@ -1,18 +1,30 @@
+import '@babel/polyfill';
 import 'dotenv/config';
-import express from 'express';
 import logger from './utils/logger';
-import startUp from './startup/startup';
+import express from 'express';
+import middlewares from './startup/startup';
 import logging from './startup/logging';
-import NotFound from './middleware/404';
-
-const { PORT } = process.env;
+import { InvalidRoute } from './middleware/404';
+import { sendSuccessResponse } from './utils/responseHandler';
 
 const app = express();
 
 logging();
-startUp(app);
-app.all('*', NotFound);
+middlewares(app);
+
+// base path
+app.get('/', (req, res) => {
+        return sendSuccessResponse(res, 200, { message: 'Stock data API here for you!' });
+});
+
+app.all('*', InvalidRoute);
+
+const { PORT } = process.env;
 
 const port = PORT;
 
-app.listen(port, () => logger.info(`${app.get('env')}: server App listening on PORT ${port}...`));
+const server = app.listen(port, () =>
+        logger.info(`${app.get('env')}: server App listening on PORT ${port}...`)
+);
+
+export default server;
