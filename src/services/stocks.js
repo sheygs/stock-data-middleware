@@ -16,13 +16,21 @@ const { BASE_URL, API_KEY } = process.env;
 
 class StockService {
         static async getGroupedDailyStocks(req) {
-                logger.info(`req:${JSON.stringify(req.query)}`);
+                logger.info(`req: ${JSON.stringify(req)}`);
+                logger.info(`query:${JSON.stringify(req.query)}`);
 
                 const isValid = allowedQueries(GROUPED_DAILY_STOCKS_LIST_QUERIES, req.query);
 
                 if (!isValid) return sendErrorResponse(res, 400, 'Invalid Query');
 
-                let { page = 1, limit = 10, cost, percentPer, gain, name } = req.query;
+                let {
+                        page = 1,
+                        limit = 10,
+                        cost = { gte: '2' },
+                        percentPer = { lte: '3' },
+                        gain,
+                        name,
+                } = req.query || {};
 
                 const valid = validateQueryValues({ page, limit });
 
@@ -81,7 +89,7 @@ class StockService {
                                 }
 
                                 if (gain.value) {
-                                        filteredCondition = filterCondition(result.d, gain);
+                                        filteredCondition = filterCondition(result.g, gain);
 
                                         if (!filteredCondition) return;
                                 }
