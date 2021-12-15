@@ -13,7 +13,7 @@ const formatOptions = {
                         const today = new Date();
                         const timestamp = `${
                                 today.toISOString().split('T')[0]
-                        } ${today.toLocaleTimeString()}`;
+                        } :::${today.toLocaleTimeString()}`;
                         return `${timestamp} ${info.level}: ${info.message}`;
                 })
         ),
@@ -22,8 +22,17 @@ const formatOptions = {
 const logger = winston.createLogger({
         ...formatOptions,
         transports: [
-                new winston.transports.File({ filename: 'error.log', level: 'error' }),
+                new winston.transports.File({
+                        filename: `${process.cwd()}/app_logs/error.log`,
+                        level: 'error',
+                        maxFiles: 3,
+                }),
                 new winston.transports.Console({ level: 'info' }),
+                new winston.transports.File({
+                        level: 'info',
+                        filename: `${process.cwd()}/app_logs/info.log`,
+                        maxFiles: 3,
+                }),
         ],
 });
 
