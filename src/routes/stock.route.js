@@ -1,5 +1,4 @@
 import express from 'express';
-import { verifyAuth } from '../middleware/auth';
 import StockController from '../controller/stock';
 
 const router = express.Router();
