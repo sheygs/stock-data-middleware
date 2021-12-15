@@ -3,12 +3,9 @@ import logger from '../utils/logger';
 import axios from 'axios';
 import {
         paginate,
-        allowedQueries,
-        validateQueryValues,
         handleMap,
         extractValueOperator,
         filterCondition,
-        GROUPED_DAILY_STOCKS_LIST_QUERIES,
 } from '../utils/helper';
 
 import { config } from '../config/envConfig';
@@ -19,14 +16,6 @@ class StockService {
         static async getGroupedDailyStocks(query) {
                 try {
                         logger.info(`req: ${JSON.stringify(query)}`);
-
-                        const isValid = allowedQueries(GROUPED_DAILY_STOCKS_LIST_QUERIES, query);
-
-                        if (!isValid) throw 'Invalid';
-
-                        const valid = validateQueryValues({ page, limit });
-
-                        logger.info(`valid: ${valid}`);
 
                         let { page = 1, limit = 10, cost, percentPer, gain, name } = query;
 

@@ -1,16 +1,45 @@
 import express from 'express';
 import StockController from '../controller/stock';
+import validator from '../utils/inputValidators';
 
 const router = express.Router();
 
-router.get('/stocks/agg', StockController.getAggregateStocks);
+router.get(
+        '/stocks/agg',
+        validator.validateTicker,
+        validator.validateStartDate,
+        validator.validateEndDate,
+        validator.validationHandler,
+        StockController.getAggregateStocks
+);
 
-router.get('/stocks', StockController.groupedDailyStocks);
+router.get(
+        '/stocks',
+        validator.validateGetStocks,
+        validator.validationHandler,
+        StockController.groupedDailyStocks
+);
 
-router.get('/open-close/:ticker/:date', StockController.getDailyOpenCloseStocks);
+router.get(
+        '/open-close/:ticker/:date',
+        validator.validateDailyOpenCloseDate,
+        validator.validateDailyOpenCloseTicker,
+        validator.validationHandler,
+        StockController.getDailyOpenCloseStocks
+);
 
-router.get('/ticker/:ticker/prev', StockController.getPreviousCloseStocks);
+router.get(
+        '/ticker/:ticker/prev',
+        validator.validateDailyOpenCloseTicker,
+        validator.validationHandler,
+        StockController.getPreviousCloseStocks
+);
 
-router.get('/ticker/:tickerId', StockController.getStockTickerDetails);
+router.get(
+        '/ticker/:ticker',
+        validator.validateDailyOpenCloseTicker,
+        validator.validationHandler,
+        StockController.getStockTickerDetails
+);
 
 export default router;
