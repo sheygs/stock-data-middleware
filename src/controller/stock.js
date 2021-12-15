@@ -17,7 +17,7 @@ import StockService from '../services/stocks';
 
 const { BASE_URL, API_KEY } = process.env;
 
-const aggregateStocks = asyncMiddleware(async (req, res) => {
+const getAggregateStocks = async (req, res, next) => {
         const { tickerId, multiplier, timespan, from, to } = req.params;
 
         const isValid = allowedQueries(AGGREGATE_STOCKS_LIST_QUERIES, req.query);
@@ -26,29 +26,38 @@ const aggregateStocks = asyncMiddleware(async (req, res) => {
 
         const params = clientQuery(req.query);
 
+        logger.info(`Params: ${JSON.stringify(params)}`);
+
         logger.info(`Access Token: ${API_KEY}`);
 
-        logger.info(
-                `About to call ${BASE_URL}/v2/aggs/ticker/${tickerId}/range/${multiplier}/${timespan}/${from}/${to}`
-        );
+        try {
+                logger.info(
+                        `About to call ${BASE_URL}/v2/aggs/ticker/${tickerId}/range/${multiplier}/${timespan}/${from}/${to}`
+                );
 
-        const response = await axios.get(
-                `${BASE_URL}/v2/aggs/ticker/${tickerId}/range/${multiplier}/${timespan}/${from}/${to}`,
-                {
-                        params,
-                        headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${API_KEY}`,
-                        },
-                }
-        );
+                const response = await axios.get(
+                        // /v2/aggs/ticker/AAPL/range/2/week/2020-12-03/2021-12-04
+                        `${BASE_URL}/v2/aggs/ticker/${tickerId}/range/${multiplier}/${timespan}/${from}/${to}`,
+                        {
+                                params: {
+                                        ...params,
+                                },
+                                headers: {
+                                        'Content-Type': 'application/json',
+                                        Authorization: `Bearer ${API_KEY}`,
+                                },
+                        }
+                );
 
-        logger.info(`response: ${JSON.stringify(response)}`);
+                logger.info(`response: ${JSON.stringify(response)}`);
 
-        const { status, data } = response;
+                const { status, data } = response;
 
-        if (status === 200) return sendSuccessResponse(res, 200, data);
-});
+                if (status === 200) return sendSuccessResponse(res, 200, data);
+        } catch (error) {
+                next(error);
+        }
+};
 
 const groupedDailyStocks = asyncMiddleware(async (req, res) => {
         const { resultData, status } = await StockService.getGroupedDailyStocks(req);
@@ -119,7 +128,7 @@ const getStockTickerDetails = asyncMiddleware(async (req, res) => {
 });
 
 const StockController = {
-        aggregateStocks,
+        getAggregateStocks,
         groupedDailyStocks,
         getDailyOpenCloseStocks,
         getPreviousCloseStocks,
