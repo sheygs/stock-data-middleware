@@ -1,4 +1,4 @@
-const AGGREGATE_STOCKS_LIST_QUERIES = ['limit', 'sort', 'adjusted'];
+const AGGREGATE_STOCKS_LIST_QUERIES = ['tickerId', 'from', 'to'];
 
 const GROUPED_DAILY_STOCKS_LIST_QUERIES = [
         'limit',
@@ -41,7 +41,8 @@ const validateQueryValues = (reqObj) => {
 
 const handleMap = ({ c, o }) => {
         return {
-                ...result,
+                c,
+                o,
                 g: Number(c - o).toFixed(2),
                 p: (((Number(c) - Number(o)) / Number(o)) * 100).toFixed(2),
         };
