@@ -1,9 +1,8 @@
   <p align="center">
-    <h2 style="color:magenta;">Stock-Data-Middleware</h2>
+    <h2>Stock-Data-Middleware</h2>
     <br>
     <p>A middleware service that exposes the <a href="http://polygon.io/">Polygon.io</a> Stock APIs</p>
   </p>
-</p>
 
 ### Features
 
@@ -39,7 +38,7 @@
  API_KEY=XXXXXXXXXXXXXXX
  BASE_URL=XXXXXXXXXXXXXX
  PORT=3000
- DEV_DB_URL=postgresql://{user}:{password}@{host}:{port}/{dataBase}
+ DEV_DB_URL=postgresql://user:password@host:port/dataBase
 ```
 
 ### Start App
