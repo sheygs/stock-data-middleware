@@ -31,3 +31,9 @@
 ## Documentation
 
 - [Swagger](#)
+
+## Test
+
+- npm run test
+
+
