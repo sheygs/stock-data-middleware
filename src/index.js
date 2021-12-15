@@ -10,6 +10,7 @@ import { baseRoute } from './middleware/baseRoute';
 const app = express();
 
 logging();
+
 middlewares(app);
 
 // base path
