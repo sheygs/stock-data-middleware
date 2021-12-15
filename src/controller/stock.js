@@ -36,7 +36,6 @@ const getAggregateStocks = async (req, res, next) => {
                 );
 
                 const response = await axios.get(
-                        // /v2/aggs/ticker/AAPL/range/2/week/2020-12-03/2021-12-04
                         `${BASE_URL}/v2/aggs/ticker/${tickerId}/range/${multiplier}/${timespan}/${from}/${to}`,
                         {
                                 params: {
