@@ -43,15 +43,15 @@
 
 ### Start App
 
-- ```bash
+```bash
    $ npm run start
-  ```
+```
 
 ### Test
 
-- ```bash
+```bash
    $ npm run start
-  ```
+```
 
 ### Available Endpoints
 
