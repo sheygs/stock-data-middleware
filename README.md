@@ -63,4 +63,4 @@
 | GET    | /stocks                   | page, limit            | YES  |
 | GET    | /open-close/:ticker/:date | ticker, date, adjusted | YES  |
 | GET    | /ticker/:ticker/prev      | ticker, adjusted       | YES  |
-| GET    | /ticker/:tickerId         | tickerId               | YES  |
+| GET    | /ticker/:ticker           | ticker                 | YES  |
