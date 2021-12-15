@@ -9,12 +9,12 @@ const mode = 'development' || NODE_ENV;
 
 const envConfig = settings(mode);
 
-const config = process.env[envConfig.envVariable];
+const connectionUrl = process.env[envConfig.envVariable];
 
-logger.info(`config: ${config}`);
+logger.info(`DB ConnectionUrl: ${connectionUrl}`);
 
 const pool = new Pool({
-        connectionString: config,
+        connectionString: connectionUrl,
 });
 
 (async () => {

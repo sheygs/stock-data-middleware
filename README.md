@@ -14,7 +14,7 @@
 
 ## Requirements
 
-- [API Key](http://polygon.io)
+- [API Key](http://api.polygon.io)
 - NodeJS (> 6)
 - NPM
 - Postman

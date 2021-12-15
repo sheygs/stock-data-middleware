@@ -14,4 +14,6 @@ router.get('/open-close/:ticker/:date', StockController.getDailyOpenCloseStocks)
 
 router.get('/aggs/ticker/:ticker/prev', StockController.getPreviousCloseStocks);
 
+router.get('/ticker/:tickerId', StockController.getStockTickerDetails);
+
 export default router;

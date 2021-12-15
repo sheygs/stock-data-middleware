@@ -15,7 +15,9 @@ const persistBestStocks = () => {
                                 },
                         });
                         logger.info(
-                                `Call from Stock Service: ${JSON.stringify(response.resultData)}`
+                                `Result Call from Stock Service: ${JSON.stringify(
+                                        response.resultData
+                                )}`
                         );
 
                         const { resultData } = response;
@@ -35,16 +37,16 @@ const persistBestStocks = () => {
                                         result
                                 )}`
                         );
-                } catch (error) {
-                        logger.error(`${error.message}`, `${error.stack}`);
+                } catch ({ message, stack }) {
+                        logger.error(`${message}`, `\n${stack}`);
                 }
         });
 };
 
-const handleStockPersistence = (stock) => {
-        const columnNames = 'tickerName, gain, cost, percentPer, timestamp';
-        const values = `'${stock.T}','${stock.g}','${stock.c}','${stock.p}','${stck.t}'`;
-        return StockEntityInstance.insert(columnNames, values);
+const handleStockPersistence = ({ T, g, c, p, t }) => {
+        const columns = 'tickerName, gain, cost, percentPer, timestamp';
+        const values = `'${T}','${g}','${c}','${p}','${t}'`;
+        return StockEntityInstance.insert(columns, values);
 };
 
 export { persistBestStocks };

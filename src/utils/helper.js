@@ -39,11 +39,11 @@ const validateQueryValues = (reqObj) => {
         return valuesArr.every((value) => Boolean(parseInt(value)));
 };
 
-const handleMap = (result) => {
+const handleMap = ({ c, o }) => {
         return {
                 ...result,
-                g: +(result.c - result.o).toFixed(2),
-                p: +(((result.c - result.o) / result.o) * 100).toFixed(2),
+                g: Number(c - o).toFixed(2),
+                p: (((Number(c) - Number(o)) / Number(o)) * 100).toFixed(2),
         };
 };
 
