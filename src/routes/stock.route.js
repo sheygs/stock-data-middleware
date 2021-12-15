@@ -6,14 +6,13 @@ const router = express.Router();
 
 router.get(
         '/aggs/ticker/:tickerId/:multiplier/:timespan/:from/:to',
-        verifyAuth,
         StockController.aggregateStocks
 );
 
-router.get('/aggs/stocks/:date', verifyAuth, StockController.groupedDailyStocks);
+router.get('/aggs/stocks/:date', StockController.groupedDailyStocks);
 
-router.get('/open-close/:ticker/:date', verifyAuth, StockController.getDailyOpenCloseStocks);
+router.get('/open-close/:ticker/:date', StockController.getDailyOpenCloseStocks);
 
-router.get('/aggs/ticker/:ticker/prev', verifyAuth, StockController.getPreviousCloseStocks);
+router.get('/aggs/ticker/:ticker/prev', StockController.getPreviousCloseStocks);
 
 export default router;
