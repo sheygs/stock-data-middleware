@@ -4,7 +4,7 @@
         "description": "A minimalistic implementation of the stock market  API",
         "main": "index.js",
         "scripts": {
-                "test": "jest --testTimeout=6000 --watchAll --detectOpenHandles --verbose",
+                "test": "jest --watch --detectOpenHandles --verbose",
                 "clean": "rimraf dist",
                 "build": "npm run clean && babel ./src --out-dir ./dist",
                 "start": "npm run build && nodemon --exec babel-node src/index.js",
