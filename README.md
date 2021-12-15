@@ -38,21 +38,21 @@
 ```bash
  API_KEY=XXXXXXXXXXXXXXX
  BASE_URL=XXXXXXXXXXXXXX
- PORT=3000
- DEV_DB_URL=postgresql://{user}:{password}@{host}:{port}/{dataBase}
+ PORT=
+ DEV_DB_URL=postgresql://user:password@host:port/dataBase
 ```
 
 ### Start App
 
-- ```bash
-   $ npm run start
-  ```
+```bash
+  $ npm run start
+```
 
 ### Test
 
-- ```bash
-   $ npm run start
-  ```
+```bash
+  $ npm run start
+```
 
 ### Available Endpoints
 
