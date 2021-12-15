@@ -1,7 +1,7 @@
 import server from '../src/index';
 import request from 'supertest';
 
-describe('Startup Entry', () => {
+describe('Application Entry', () => {
         test('Should display app entry welcome message', async () => {
                 const response = await request(server).get('/').expect(200);
                 expect(response.body.data.message).toEqual('Stock data API here for you!');

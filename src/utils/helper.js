@@ -12,7 +12,7 @@ const GROUPED_DAILY_STOCKS_LIST_QUERIES = [
 
 const DAILY_OPEN_CLOSE_LIST_QUERIES = ['adjusted'];
 
-const paginate = (results, page = 1, limit = 10) => {
+const paginate = (results = [], page = 1, limit = 10) => {
         const start = (page - 1) * limit;
         const end = page * limit;
         return results.slice(start, end);
@@ -23,19 +23,19 @@ const allowedQueries = (allowedQueryArr, reqQuery) => {
         return clientQueries.every((el) => allowedQueryArr.includes(el));
 };
 
-const clientQuery = (reqQuery) => {
+const clientQuery = (reqObj = {}) => {
         let params = {};
-        const keys = Object.keys(reqQuery);
+        const keys = Object.keys(reqObj);
         for (let key of keys) {
-                if (reqQuery[key]) {
-                        params[key] = reqQuery[key];
+                if (reqObj[key]) {
+                        params[key] = reqObj[key];
                 }
         }
         return params;
 };
 
-const validateQueryValues = (reqQuery) => {
-        const valuesArr = Object.values(reqQuery);
+const validateQueryValues = (reqObj) => {
+        const valuesArr = Object.values(reqObj);
         return valuesArr.every((value) => Boolean(parseInt(value)));
 };
 

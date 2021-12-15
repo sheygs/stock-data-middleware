@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger.json';
 import cors from 'cors';
+import { persistBestStocks } from '../services/task';
 
 const middlewares = (app) => {
         if (app.get('env') === 'development') {
@@ -19,6 +20,7 @@ const middlewares = (app) => {
         app.use(helmet());
         app.use('/api/v1/auth', StockRoutes);
         app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+        persistBestStocks();
         app.use(errorHandler);
 };
 

@@ -22,13 +22,11 @@ const aggregateStocks = asyncMiddleware(async (req, res) => {
 
         const isValid = allowedQueries(AGGREGATE_STOCKS_LIST_QUERIES, req.query);
 
-        if (!isValid) return sendErrorResponse(res, 400, 'Invalid query syntax');
+        if (!isValid) return sendErrorResponse(res, 400, 'Invalid Query');
 
         const params = clientQuery(req.query);
 
-        logger.info(`params: ${JSON.stringify(params)}`);
-
-        logger.info(`Base URL:${BASE_URL}, key: ${req.API_KEY}`);
+        logger.info(`Key: ${API_KEY}`);
 
         logger.info(
                 `About to call ${BASE_URL}/v2/aggs/ticker/${tickerId}/range/${multiplier}/${timespan}/${from}/${to}`
@@ -40,7 +38,7 @@ const aggregateStocks = asyncMiddleware(async (req, res) => {
                         params,
                         headers: {
                                 'Content-Type': 'application/json',
-                                Authorization: `Bearer ${req.API_KEY}`,
+                                Authorization: `Bearer ${API_KEY}`,
                         },
                 }
         );
@@ -67,12 +65,9 @@ const getDailyOpenCloseStocks = asyncMiddleware(async (req, res) => {
 
         const isValid = allowedQueries(DAILY_OPEN_CLOSE_LIST_QUERIES, req.query);
 
-        if (!isValid) return sendErrorResponse(res, 400, 'Invalid query syntax');
+        if (!isValid) return sendErrorResponse(res, 400, 'Invalid Query');
 
         const params = clientQuery(req.query);
-
-        if (!date || !ticker)
-                return sendErrorResponse(res, 400, 'date or ticker paramter not supplied');
 
         const { status, data } = await axios.get(`${BASE_URL}/v1/open-close/${ticker}/${date}`, {
                 params,

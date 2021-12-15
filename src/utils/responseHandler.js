@@ -15,7 +15,7 @@ export const sendSuccessResponse = (res, code, data = {}) => {
         });
 };
 
-export const sendNetworkResponse = (res, message = 'Network Error') => {
+export const sendResponse = (res, message = 'An error occured. Please try again later.') => {
         res.send({
                 message,
         });

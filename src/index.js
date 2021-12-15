@@ -5,17 +5,16 @@ import express from 'express';
 import middlewares from './startup/startup';
 import logging from './startup/logging';
 import { InvalidRoute } from './middleware/404';
-import { sendSuccessResponse } from './utils/responseHandler';
+import { baseRoute } from './middleware/baseRoute';
 
 const app = express();
 
 logging();
+
 middlewares(app);
 
 // base path
-app.get('/', (req, res) => {
-        return sendSuccessResponse(res, 200, { message: 'Stock data API here for you!' });
-});
+app.get('/', baseRoute);
 
 app.all('*', InvalidRoute);
 

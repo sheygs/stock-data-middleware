@@ -4,7 +4,7 @@ import StockController from '../controller/stock';
 const router = express.Router();
 
 router.get(
-        '/aggs/ticker/:tickerId/:multiplier/:timespan/:from/:to',
+        '/aggs/ticker/:tickerId/range/:multiplier/:timespan/:from/:to',
         StockController.aggregateStocks
 );
 
