@@ -4,7 +4,7 @@ import logger from '../utils/logger';
 import StockEntityInstance from '../container/stock';
 
 const persistBestStocks = () => {
-        logger.info(`Job task runs every 5:30 AM`);
+        logger.info(`Job task runs every 5:30 AM...`);
 
         cron.schedule('00 30 05 * * *', async () => {
                 try {
