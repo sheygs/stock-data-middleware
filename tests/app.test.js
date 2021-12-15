@@ -14,6 +14,6 @@ describe('Application Entry', () => {
         });
 });
 
-afterEach(() => {
+afterAll(() => {
         server.close();
 });
