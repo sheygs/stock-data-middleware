@@ -23,8 +23,8 @@
 
 - git clone repository url
 - cd directory
-- Rename .env.sample to .env
-- Populate required keys
+- Rename _.env.sample_ to _.env_
+- Populate required keys from the _.env_ file
 - npm install
 - npm start
 
