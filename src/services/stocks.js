@@ -17,7 +17,6 @@ const { BASE_URL, API_KEY } = process.env;
 class StockService {
         static async getGroupedDailyStocks(req) {
                 logger.info(`req: ${JSON.stringify(req)}`);
-                logger.info(`query:${JSON.stringify(req.query)}`);
 
                 const isValid = allowedQueries(GROUPED_DAILY_STOCKS_LIST_QUERIES, req.query);
 
