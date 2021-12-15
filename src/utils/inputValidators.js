@@ -9,10 +9,6 @@ const validateStartDate = [
 const validateEndDate = [query('to').notEmpty().exists().withMessage('End Date must be provided')];
 
 const validateGetStocks = [
-        // query('name').customSanitizer(value => {
-        //     value.replace(//g. "")
-
-        //     }),
         query('name')
                 .optional()
                 .notEmpty()
