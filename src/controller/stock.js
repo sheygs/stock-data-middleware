@@ -26,26 +26,7 @@ const getAggregateStocks = asyncMiddleware(async (req, res) => {
 
         if (!isValid) return sendErrorResponse(res, 400, 'Invalid Query');
 
-        const { tickerId, from, to } = req.query;
-
-        logger.info(
-                `About to call ${BASE_URL}/v2/aggs/ticker/${tickerId}/range/1/day/${from}/${to}...`
-        );
-
-        const response = await axios.get(
-                `${BASE_URL}/v2/aggs/ticker/${tickerId}/range/1/day/${from}/${to}`,
-                {
-                        params: {
-                                adjusted: false,
-                                sort: 'asc',
-                                limit: '10',
-                        },
-                        headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${API_KEY}`,
-                        },
-                }
-        );
+        const response = await StockService.getAggregateStocks(req.query);
 
         logger.info(`response: ${JSON.stringify(response)}`);
 

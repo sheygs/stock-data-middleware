@@ -57,10 +57,10 @@
 
 `/api/v1/auth`
 
-| Method | Route                     | Parameters                  | Auth |
-| ------ | ------------------------- | --------------------------- | ---- |
-| GET    | /stocks/agg /             | tickerId,from,to            | YES  |
-| GET    | /stocks/:date             | date, adjusted, page, limit | YES  |
-| GET    | /open-close/:ticker/:date | ticker, date, adjusted      | YES  |
-| GET    | /ticker/:ticker/prev      | ticker, adjusted            | YES  |
-| GET    | /ticker/:tickerId         | tickerId                    | YES  |
+| Method | Route                     | Parameters             | Auth |
+| ------ | ------------------------- | ---------------------- | ---- |
+| GET    | /stocks/agg               | tickerId,from,to       | YES  |
+| GET    | /stocks                   | page, limit            | YES  |
+| GET    | /open-close/:ticker/:date | ticker, date, adjusted | YES  |
+| GET    | /ticker/:ticker/prev      | ticker, adjusted       | YES  |
+| GET    | /ticker/:tickerId         | tickerId               | YES  |

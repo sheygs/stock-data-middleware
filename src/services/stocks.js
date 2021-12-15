@@ -17,25 +17,25 @@ const { BASE_URL, API_KEY } = config;
 
 class StockService {
         static async getGroupedDailyStocks(query) {
-                logger.info(`req: ${JSON.stringify(query)}`);
-
-                const isValid = allowedQueries(GROUPED_DAILY_STOCKS_LIST_QUERIES, query);
-
-                if (!isValid) throw 'Invalid';
-
-                let { page = 1, limit = 10, cost, percentPer, gain, name } = query;
-
-                const valid = validateQueryValues({ page, limit });
-
-                logger.info(`valid: ${valid}`);
-
-                logger.info(
-                        `About to call ${BASE_URL}/v2/aggs/grouped/locale/us/market/stocks/2021-10-14`
-                );
-
                 try {
+                        logger.info(`req: ${JSON.stringify(query)}`);
+
+                        const isValid = allowedQueries(GROUPED_DAILY_STOCKS_LIST_QUERIES, query);
+
+                        if (!isValid) throw 'Invalid';
+
+                        const valid = validateQueryValues({ page, limit });
+
+                        logger.info(`valid: ${valid}`);
+
+                        let { page = 1, limit = 10, cost, percentPer, gain, name } = query;
+
+                        logger.info(
+                                `About to call ${BASE_URL}/v2/aggs/grouped/locale/us/market/stocks/2020-10-14`
+                        );
+
                         const { status, data } = await axios.get(
-                                `${BASE_URL}/v2/aggs/grouped/locale/us/market/stocks/2021-10-14`,
+                                `${BASE_URL}/v2/aggs/grouped/locale/us/market/stocks/2020-10-14`,
                                 {
                                         params: {
                                                 adjusted: false,
@@ -96,8 +96,39 @@ class StockService {
                         const resultData = paginate(results, parseInt(page), parseInt(limit));
 
                         return { resultData, status };
-                } catch ({ message }) {
+                } catch ({ message, code, stack }) {
+                        logger.info(`${message}`);
                         throw message;
+                }
+        }
+
+        static async getAggregateStocks(query) {
+                try {
+                        const { tickerId, from, to } = query;
+
+                        logger.info(
+                                `About to call ${BASE_URL}/v2/aggs/ticker/${tickerId}/range/1/day/${from}/${to}...`
+                        );
+
+                        const response = await axios.get(
+                                `${BASE_URL}/v2/aggs/ticker/${tickerId}/range/1/day/${from}/${to}`,
+                                {
+                                        params: {
+                                                adjusted: false,
+                                                sort: 'asc',
+                                                limit: '10',
+                                        },
+                                        headers: {
+                                                'Content-Type': 'application/json',
+                                                Authorization: `Bearer ${API_KEY}`,
+                                        },
+                                }
+                        );
+
+                        return response;
+                } catch (error) {
+                        logger.info(`${error}`);
+                        throw error;
                 }
         }
 }

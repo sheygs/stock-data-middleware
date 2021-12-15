@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/stocks/agg', StockController.getAggregateStocks);
 
-router.get('/stocks/:date', StockController.groupedDailyStocks);
+router.get('/stocks', StockController.groupedDailyStocks);
 
 router.get('/open-close/:ticker/:date', StockController.getDailyOpenCloseStocks);
 

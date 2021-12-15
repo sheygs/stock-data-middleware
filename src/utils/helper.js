@@ -1,14 +1,6 @@
 const AGGREGATE_STOCKS_LIST_QUERIES = ['tickerId', 'from', 'to'];
 
-const GROUPED_DAILY_STOCKS_LIST_QUERIES = [
-        'limit',
-        'page',
-        'adjusted',
-        'cost',
-        'percentPer',
-        'name',
-        'gain',
-];
+const GROUPED_DAILY_STOCKS_LIST_QUERIES = ['limit', 'page', 'cost', 'percentPer', 'name', 'gain'];
 
 const DAILY_OPEN_CLOSE_LIST_QUERIES = ['adjusted'];
 
@@ -39,10 +31,11 @@ const validateQueryValues = (reqObj) => {
         return valuesArr.every((value) => Boolean(parseInt(value)));
 };
 
-const handleMap = ({ c, o }) => {
+const handleMap = ({ c, o, ...rest }) => {
         return {
                 c,
                 o,
+                ...rest,
                 g: Number(c - o).toFixed(2),
                 p: (((Number(c) - Number(o)) / Number(o)) * 100).toFixed(2),
         };
