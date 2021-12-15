@@ -9,11 +9,13 @@ const persistBestStocks = () => {
         cron.schedule('00 30 05 * * *', async () => {
                 try {
                         const response = await StockService.getGroupedDailyStocks({
-                                query: {
-                                        cost: { gte: '2' },
-                                        percentPer: { lte: '3' },
-                                },
+                                adjusted: false,
+                                cost: { gte: '2' },
+                                percentPer: { lte: '3' },
+                                page: '1',
+                                limit: '10',
                         });
+
                         logger.info(
                                 `Result Call from Stock Service: ${JSON.stringify(
                                         response.resultData

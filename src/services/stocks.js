@@ -11,95 +11,94 @@ import {
         GROUPED_DAILY_STOCKS_LIST_QUERIES,
 } from '../utils/helper';
 
-import { sendErrorResponse } from '../utils/responseHandler';
-const { BASE_URL, API_KEY } = process.env;
+import { config } from '../config/envConfig';
+
+const { BASE_URL, API_KEY } = config;
 
 class StockService {
-        static async getGroupedDailyStocks(req) {
-                logger.info(`req: ${JSON.stringify(req)}`);
+        static async getGroupedDailyStocks(query) {
+                logger.info(`req: ${JSON.stringify(query)}`);
 
-                const isValid = allowedQueries(GROUPED_DAILY_STOCKS_LIST_QUERIES, req.query);
+                const isValid = allowedQueries(GROUPED_DAILY_STOCKS_LIST_QUERIES, query);
 
-                if (!isValid) return sendErrorResponse(res, 400, 'Invalid Query');
+                if (!isValid) throw 'Invalid';
 
-                let {
-                        page = 1,
-                        limit = 10,
-                        cost = { gte: '2' },
-                        percentPer = { lte: '3' },
-                        gain,
-                        name,
-                } = req.query || {};
+                let { page = 1, limit = 10, cost, percentPer, gain, name } = query;
 
                 const valid = validateQueryValues({ page, limit });
 
-                if (!valid)
-                        return sendErrorResponse(
-                                res,
-                                400,
-                                'Error parsing query parameters from URL'
-                        );
+                logger.info(`valid: ${valid}`);
 
                 logger.info(
                         `About to call ${BASE_URL}/v2/aggs/grouped/locale/us/market/stocks/2021-10-14`
                 );
 
-                const { status, data } = await axios.get(
-                        `${BASE_URL}/v2/aggs/grouped/locale/us/market/stocks/2021-10-14`,
-                        {
-                                params: {
-                                        adjusted: false,
-                                },
-                                headers: {
-                                        'Content-Type': 'application/json',
-                                        Authorization: `Bearer ${API_KEY}`,
-                                },
+                try {
+                        const { status, data } = await axios.get(
+                                `${BASE_URL}/v2/aggs/grouped/locale/us/market/stocks/2021-10-14`,
+                                {
+                                        params: {
+                                                adjusted: false,
+                                        },
+                                        headers: {
+                                                'Content-Type': 'application/json',
+                                                Authorization: `Bearer ${API_KEY}`,
+                                        },
+                                }
+                        );
+
+                        let results = data.results.map(handleMap);
+
+                        cost = extractValueOperator(cost);
+
+                        percentPer = extractValueOperator(percentPer);
+
+                        name = extractValueOperator(name);
+
+                        gain = extractValueOperator(gain);
+
+                        logger.info(`${JSON.stringify({ cost, percentPer, name, gain })}`);
+
+                        if (cost.value || percentPer.value || name.value || gain.value) {
+                                results = results.filter((result) => {
+                                        let filteredCondition;
+
+                                        if (cost.value) {
+                                                filteredCondition = filterCondition(result.c, cost);
+                                                if (!filteredCondition) return;
+                                        }
+
+                                        if (percentPer.value) {
+                                                filteredCondition = filterCondition(
+                                                        result.p,
+                                                        percentPer
+                                                );
+
+                                                if (!filteredCondition) return;
+                                        }
+
+                                        if (name.value) {
+                                                filteredCondition = filterCondition(result.T, name);
+
+                                                if (!filteredCondition) return;
+                                        }
+
+                                        if (gain.value) {
+                                                filteredCondition = filterCondition(result.g, gain);
+
+                                                if (!filteredCondition) return;
+                                        }
+
+                                        return filteredCondition;
+                                });
                         }
-                );
 
-                let results = data.results.map(handleMap);
+                        const resultData = paginate(results, parseInt(page), parseInt(limit));
 
-                cost = extractValueOperator(cost);
-                percentPer = extractValueOperator(percentPer);
-                name = extractValueOperator(name);
-                gain = extractValueOperator(gain);
-
-                logger.info(`${JSON.stringify({ cost, percentPer, name, gain })}`);
-
-                if (cost.value || percentPer.value || name.value || gain.value) {
-                        results = results.filter((result) => {
-                                let filteredCondition;
-
-                                if (cost.value) {
-                                        filteredCondition = filterCondition(result.c, cost);
-                                        if (!filteredCondition) return;
-                                }
-
-                                if (percentPer.value) {
-                                        filteredCondition = filterCondition(result.p, percentPer);
-
-                                        if (!filteredCondition) return;
-                                }
-
-                                if (name.value) {
-                                        filteredCondition = filterCondition(result.T, name);
-
-                                        if (!filteredCondition) return;
-                                }
-
-                                if (gain.value) {
-                                        filteredCondition = filterCondition(result.g, gain);
-
-                                        if (!filteredCondition) return;
-                                }
-
-                                return filteredCondition;
-                        });
+                        return { resultData, status };
+                } catch ({ message }) {
+                        throw message;
                 }
-
-                const resultData = paginate(results, parseInt(page), parseInt(limit));
-
-                return { resultData, status };
         }
 }
 

@@ -15,51 +15,47 @@ import { asyncMiddleware } from '../middleware/async';
 
 import StockService from '../services/stocks';
 
-const { BASE_URL, API_KEY } = process.env;
+import { config } from '../config/envConfig';
 
-const getAggregateStocks = async (req, res, next) => {
-        const { tickerId, multiplier, timespan, from, to } = req.params;
+const { BASE_URL, API_KEY } = config;
+
+const getAggregateStocks = asyncMiddleware(async (req, res) => {
+        logger.info(`Query: ${JSON.stringify(req.query)}, API_KEY: ${API_KEY}`);
 
         const isValid = allowedQueries(AGGREGATE_STOCKS_LIST_QUERIES, req.query);
 
         if (!isValid) return sendErrorResponse(res, 400, 'Invalid Query');
 
-        const params = clientQuery(req.query);
+        const { tickerId, from, to } = req.query;
 
-        logger.info(`Params: ${JSON.stringify(params)}`);
+        logger.info(
+                `About to call ${BASE_URL}/v2/aggs/ticker/${tickerId}/range/1/day/${from}/${to}...`
+        );
 
-        logger.info(`Access Token: ${API_KEY}`);
+        const response = await axios.get(
+                `${BASE_URL}/v2/aggs/ticker/${tickerId}/range/1/day/${from}/${to}`,
+                {
+                        params: {
+                                adjusted: false,
+                                sort: 'asc',
+                                limit: '10',
+                        },
+                        headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${API_KEY}`,
+                        },
+                }
+        );
 
-        try {
-                logger.info(
-                        `About to call ${BASE_URL}/v2/aggs/ticker/${tickerId}/range/${multiplier}/${timespan}/${from}/${to}`
-                );
+        logger.info(`response: ${JSON.stringify(response)}`);
 
-                const response = await axios.get(
-                        `${BASE_URL}/v2/aggs/ticker/${tickerId}/range/${multiplier}/${timespan}/${from}/${to}`,
-                        {
-                                params: {
-                                        ...params,
-                                },
-                                headers: {
-                                        'Content-Type': 'application/json',
-                                        Authorization: `Bearer ${API_KEY}`,
-                                },
-                        }
-                );
+        const { status, data } = response;
 
-                logger.info(`response: ${JSON.stringify(response)}`);
-
-                const { status, data } = response;
-
-                if (status === 200) return sendSuccessResponse(res, 200, data);
-        } catch (error) {
-                next(error);
-        }
-};
+        if (status === 200) return sendSuccessResponse(res, 200, data);
+});
 
 const groupedDailyStocks = asyncMiddleware(async (req, res) => {
-        const { resultData, status } = await StockService.getGroupedDailyStocks(req);
+        const { resultData, status } = await StockService.getGroupedDailyStocks(req.query);
 
         logger.info(`ResultData: ${JSON.stringify(resultData)}`);
 

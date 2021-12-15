@@ -3,10 +3,7 @@ import StockController from '../controller/stock';
 
 const router = express.Router();
 
-router.get(
-        '/ticker/:tickerId/range/:multiplier/:timespan/:from/:to',
-        StockController.getAggregateStocks
-);
+router.get('/stocks/agg', StockController.getAggregateStocks);
 
 router.get('/stocks/:date', StockController.groupedDailyStocks);
 
