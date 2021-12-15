@@ -1,18 +1,7 @@
-const AGGREGATE_STOCKS_LIST_QUERIES = ['tickerId', 'from', 'to'];
-
-const GROUPED_DAILY_STOCKS_LIST_QUERIES = ['limit', 'page', 'cost', 'percentPer', 'name', 'gain'];
-
-const DAILY_OPEN_CLOSE_LIST_QUERIES = ['adjusted'];
-
 const paginate = (results = [], page = 1, limit = 10) => {
         const start = (page - 1) * limit;
         const end = page * limit;
         return results.slice(start, end);
-};
-
-const allowedQueries = (allowedQueryArr, reqQuery) => {
-        const clientQueries = Object.keys(reqQuery);
-        return clientQueries.every((el) => allowedQueryArr.includes(el));
 };
 
 const clientQuery = (reqObj = {}) => {
@@ -24,11 +13,6 @@ const clientQuery = (reqObj = {}) => {
                 }
         }
         return params;
-};
-
-const validateQueryValues = (reqObj) => {
-        const valuesArr = Object.values(reqObj);
-        return valuesArr.every((value) => Boolean(parseInt(value)));
 };
 
 const handleMap = ({ c, o, ...rest }) => {
@@ -75,15 +59,4 @@ const filterCondition = (actualValue, param) => {
         }
 };
 
-export {
-        paginate,
-        clientQuery,
-        validateQueryValues,
-        handleMap,
-        extractValueOperator,
-        filterCondition,
-        allowedQueries,
-        AGGREGATE_STOCKS_LIST_QUERIES,
-        GROUPED_DAILY_STOCKS_LIST_QUERIES,
-        DAILY_OPEN_CLOSE_LIST_QUERIES,
-};
+export { paginate, clientQuery, handleMap, extractValueOperator, filterCondition };
