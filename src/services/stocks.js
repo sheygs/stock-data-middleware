@@ -16,7 +16,7 @@ class StockService {
                                 cost = { gte: '2' },
                                 percentPer = { lte: '3' },
                                 gain = { lte: '1' },
-                                loss = {},
+                                loss = '0',
                         } = query || {};
 
                         const endpoint = `/v2/aggs/grouped/locale/us/market/stocks/2020-10-14`;

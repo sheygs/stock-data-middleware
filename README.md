@@ -24,14 +24,6 @@
 - [Postman](https://www.postman.com/downloads/)
 - [Git](https://git-scm.com/downloads)
 
-### Installation 📦
-
-```bash
-   $ git clone `https://github.com/sheygs13/stock-data-middleware.git`
-   $ cd stock-data-middleware
-   $ npm install
-```
-
 ### Rename _.env.sample_ to _.env_
 
 ```bash
@@ -39,6 +31,14 @@
  BASE_URL=XXXXXXXXXXXXXX
  PORT=3000
  DEV_DB_URL=postgresql://user:password@host:port/dataBase
+```
+
+### Installation 📦
+
+```bash
+   $ git clone `https://github.com/sheygs13/stock-data-middleware.git`
+   $ cd stock-data-middleware
+   $ npm install
 ```
 
 ### Start App
@@ -50,7 +50,7 @@
 ### Test
 
 ```bash
-   $ npm run start
+   $ npm run test
 ```
 
 ### Available Endpoints
@@ -147,7 +147,7 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
 ```json
 [
    {
-    "status": "success",
+      "status": "success",
       "data": [
         {
             "c": 27.51,
@@ -161,7 +161,7 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
             "n": 62,
             "g": "0.08",
             "p": "0.29"
-        },
+        }
         ...
       ]
    }
