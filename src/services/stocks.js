@@ -161,11 +161,13 @@ class StockService {
                 try {
                         const { startDate, endDate } = query;
 
+                        logger.info(`from: ${startDate}, to: ${endDate}`);
+
                         const columns = `tickerName, gain, loss, cost, percentPerf, createdAt, timestamp`;
 
-                        const conditions = `createdAt >= '${startDate}' and createdAt <= '${endDate}'`;
+                        const criteria = `createdAt >= '${startDate}' and createdAt <= '${endDate}'`;
 
-                        const result = StockEntityInstance.getAll(columns, conditions);
+                        const result = StockEntityInstance.getAll(columns, criteria);
 
                         return result;
                 } catch (error) {

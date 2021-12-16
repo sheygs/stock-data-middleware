@@ -47,11 +47,13 @@ const getStockTickerDetails = asyncMiddleware(async (req, res) => {
 });
 
 const getStockReportEntity = asyncMiddleware(async (req, res) => {
-        const { status, data } = await StockService.getStockReportEntity(req.params);
+        logger.info(`req params: ${JSON.stringify(req.params)}`);
 
-        logger.info(`Result: ${JSON.stringify(data)}`);
+        const result = await StockService.getStockReportEntity(req.params);
 
-        if (status === 200) return sendSuccessResponse(res, 200, data);
+        logger.info(`Result From GetStockReportEntity: ${JSON.stringify(result)}`);
+
+        return sendSuccessResponse(res, 200, result);
 });
 
 const StockController = {

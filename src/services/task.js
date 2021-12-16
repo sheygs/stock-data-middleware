@@ -6,19 +6,17 @@ import StockEntityInstance from '../container/stock';
 const persistBestStocks = async () => {
         logger.info('Job Scheduler runs every day at 12:00 AM...');
 
-        cron.schedule('* * * * *', async () => {
+        cron.schedule('0 0 0 * * *', async () => {
                 try {
                         const response = await StockService.getGroupedDailyStocks({});
 
                         logger.info(
-                                `Result Call from Stock Service: ${JSON.stringify(
+                                `Result call from Stock Service: ${JSON.stringify(
                                         response.resultData
                                 )}`
                         );
 
                         const { resultData } = response;
-
-                        // logger.info(`resultData: ${JSON.stringify(resultData)}`);
 
                         resultData.sort((a, b) => b.p - a.p);
 
