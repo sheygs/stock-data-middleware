@@ -331,7 +331,35 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
 [
         {
                 "status": "success",
-                "data": []
+                "data": [
+                        {
+                                "tickername": "OAKpA",
+                                "gain": "0.08",
+                                "loss": "-0.08",
+                                "cost": "27.51",
+                                "percentperf": "0.29",
+                                "createdat": "2021-12-15T23:00:00.000Z",
+                                "timestamp": "1602705600000"
+                        },
+                        {
+                                "tickername": "GIK",
+                                "gain": "0.03",
+                                "loss": "-0.03",
+                                "cost": "10.02",
+                                "percentperf": "0.30",
+                                "createdat": "2021-12-15T23:00:00.000Z",
+                                "timestamp": "1602705600000"
+                        },
+                        {
+                                "tickername": "EQ",
+                                "gain": "-0.02",
+                                "loss": "0.02",
+                                "cost": "6.12",
+                                "percentperf": "-0.33",
+                                "createdat": "2021-12-15T23:00:00.000Z",
+                                "timestamp": "1602705600000"
+                        }
+                ]
         }
 ]
 ```
