@@ -6,10 +6,10 @@ const stockEntity = `
   CREATE TABLE StockEntity(
    _id SERIAL PRIMARY KEY,
    tickerName VARCHAR(50) NOT NULL,
-   gain NUMERIC NOT NULL,
-   loss NUMERIC NOT NULL,
+   gain VARCHAR(10) NOT NULL,
+   loss VARCHAR(10) NOT NULL,
    cost NUMERIC NOT NULL,
-   percentPerf NUMERIC NOT NULL,
+   percentPerf VARCHAR(10) NOT NULL,
    createdAt DATE NOT NULL DEFAULT CURRENT_DATE,
    timestamp NUMERIC NOT NULL
   );`;

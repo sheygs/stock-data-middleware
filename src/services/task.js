@@ -3,10 +3,10 @@ import StockService from './stocks';
 import logger from '../utils/logger';
 import StockEntityInstance from '../container/stock';
 
-const persistBestStocks = () => {
+const persistBestStocks = async () => {
         logger.info('Job Scheduler runs every day at 12:00 AM...');
 
-        cron.schedule('0 0 0 * * *', async () => {
+        cron.schedule('* * * * *', async () => {
                 try {
                         const response = await StockService.getGroupedDailyStocks({});
 
@@ -18,6 +18,8 @@ const persistBestStocks = () => {
 
                         const { resultData } = response;
 
+                        // logger.info(`resultData: ${JSON.stringify(resultData)}`);
+
                         resultData.sort((a, b) => b.p - a.p);
 
                         const [stock1, stock2, stock3] = resultData;
@@ -26,7 +28,7 @@ const persistBestStocks = () => {
 
                         const stocks = [stock1, stock2, stock3].map(handleStockPersistence);
 
-                        const result = Promise.all(stocks);
+                        const result = await Promise.all(stocks);
 
                         logger.info(
                                 `Successfully persisted the best 3 performing stocks: ${JSON.stringify(
@@ -34,13 +36,16 @@ const persistBestStocks = () => {
                                 )}`
                         );
                 } catch (error) {
-                        logger.error(`Exception Error: ${error.message}`, `\n${error.stack}`);
+                        logger.error(`Exception: ${error.message}`, `\n${error.stack}`);
                 }
         });
 };
 
 const handleStockPersistence = ({ T, g, ls, c, p, t }) => {
-        const columns = 'tickerName, gain, loss, cost, percentPer, timestamp';
+        logger.info(
+                `Name:${T},Gain: ${g}, Loss: ${ls}, Cost: ${c}, Percent Performance: ${p}, Timestamp: ${t}`
+        );
+        const columns = 'tickerName, gain, loss, cost, percentPerf, timestamp';
         const values = `'${T}','${g}','${ls}','${c}','${p}','${t}'`;
         return StockEntityInstance.insert(columns, values);
 };
