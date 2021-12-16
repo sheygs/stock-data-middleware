@@ -6,9 +6,10 @@ const paginate = (results = [], page = 1, limit = 10) => {
 
 const handleMap = ({ c, o, ...rest }) => {
         return {
+                ...rest,
                 c,
                 o,
-                ...rest,
+                ls: Number(o - c).toFixed(2),
                 g: Number(c - o).toFixed(2),
                 p: (((Number(c) - Number(o)) / Number(o)) * 100).toFixed(2),
         };

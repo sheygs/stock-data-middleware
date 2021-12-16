@@ -39,9 +39,9 @@ const persistBestStocks = () => {
         });
 };
 
-const handleStockPersistence = ({ T, g, c, p, t }) => {
-        const columns = 'tickerName, gain, cost, percentPer, timestamp';
-        const values = `'${T}','${g}','${c}','${p}','${t}'`;
+const handleStockPersistence = ({ T, g, ls, c, p, t }) => {
+        const columns = 'tickerName, gain, loss, cost, percentPer, timestamp';
+        const values = `'${T}','${g}','${ls}','${c}','${p}','${t}'`;
         return StockEntityInstance.insert(columns, values);
 };
 

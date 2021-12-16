@@ -7,6 +7,7 @@ const stockEntity = `
    _id SERIAL PRIMARY KEY,
    tickerName VARCHAR(50) NOT NULL,
    gain NUMERIC NOT NULL,
+   loss NUMERIC NOT NULL,
    cost NUMERIC NOT NULL,
    percentPerf NUMERIC NOT NULL,
    createdAt DATE NOT NULL DEFAULT CURRENT_DATE,

@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import logger from '../utils/logger';
 import _axios from '../utils/_axios';
-import StockEntityTable from '../container/stock';
+import StockEntityInstance from '../container/stock';
 import { paginate, handleMap, extractValueOperator, filterCriteria } from '../utils/helper';
 
 class StockService {
@@ -16,6 +16,7 @@ class StockService {
                                 cost = { gte: '2' },
                                 percentPer = { lte: '3' },
                                 gain = { lte: '1' },
+                                loss = {},
                         } = query || {};
 
                         const endpoint = `/v2/aggs/grouped/locale/us/market/stocks/2020-10-14`;
@@ -36,6 +37,8 @@ class StockService {
 
                         gain = extractValueOperator(gain);
 
+                        loss = extractValueOperator(loss);
+
                         logger.info(
                                 `filterCriteria: ${JSON.stringify({
                                         cost,
@@ -45,8 +48,14 @@ class StockService {
                                 })}`
                         );
 
-                        if (cost.value || percentPer.value || name.value || gain.value) {
-                                results = results.filter(({ c, p, T, g }) => {
+                        if (
+                                cost.value ||
+                                percentPer.value ||
+                                name.value ||
+                                gain.value ||
+                                loss.value
+                        ) {
+                                results = results.filter(({ c, p, T, g, ls }) => {
                                         let filteredCriteria;
 
                                         if (cost.value) {
@@ -68,6 +77,12 @@ class StockService {
 
                                         if (gain.value) {
                                                 filteredCriteria = filterCriteria(g, gain);
+
+                                                if (!filteredCriteria) return;
+                                        }
+
+                                        if (loss.value) {
+                                                filteredCriteria = filterCriteria(ls, loss);
 
                                                 if (!filteredCriteria) return;
                                         }
@@ -146,11 +161,11 @@ class StockService {
                 try {
                         const { startDate, endDate } = query;
 
-                        const columns = `tickerName, gain, cost, percentPerf, createdAt, timestamp`;
+                        const columns = `tickerName, gain, loss, cost, percentPerf, createdAt, timestamp`;
 
                         const conditions = `createdAt >= '${startDate}' and createdAt <= '${endDate}'`;
 
-                        const result = StockEntityTable.getAll(columns, conditions);
+                        const result = StockEntityInstance.getAll(columns, conditions);
 
                         return result;
                 } catch (error) {
