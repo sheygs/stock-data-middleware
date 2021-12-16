@@ -1,16 +1,12 @@
 import 'dotenv/config';
 import logger from '../utils/logger';
-import axios from 'axios';
+import _axios from '../utils/_axios';
 import { paginate, handleMap, extractValueOperator, filterCriteria } from '../utils/helper';
-
-import { config } from '../config/envConfig';
-
-const { BASE_URL, API_KEY } = config;
 
 class StockService {
         static async getGroupedDailyStocks(query = {}) {
                 try {
-                        logger.info(`req: ${JSON.stringify(query)}`);
+                        logger.info(`Request Query: ${JSON.stringify(query)}`);
 
                         let {
                                 page = 1,
@@ -21,22 +17,13 @@ class StockService {
                                 gain = { lte: '1' },
                         } = query || {};
 
-                        logger.info(
-                                `About to call ${BASE_URL}/v2/aggs/grouped/locale/us/market/stocks/2020-10-14`
-                        );
+                        const endpoint = `/v2/aggs/grouped/locale/us/market/stocks/2020-10-14`;
 
-                        const { status, data } = await axios.get(
-                                `${BASE_URL}/v2/aggs/grouped/locale/us/market/stocks/2020-10-14`,
-                                {
-                                        params: {
-                                                adjusted: false,
-                                        },
-                                        headers: {
-                                                'Content-Type': 'application/json',
-                                                Authorization: `Bearer ${API_KEY}`,
-                                        },
-                                }
-                        );
+                        const response = await _axios.get(`${endpoint}`, {
+                                adjusted: false,
+                        });
+
+                        const { status, data } = response;
 
                         let results = data.results.map(handleMap);
 
@@ -48,7 +35,14 @@ class StockService {
 
                         gain = extractValueOperator(gain);
 
-                        logger.info(`${JSON.stringify({ cost, percentPer, name, gain })}`);
+                        logger.info(
+                                `filterCriteria: ${JSON.stringify({
+                                        cost,
+                                        percentPer,
+                                        name,
+                                        gain,
+                                })}`
+                        );
 
                         if (cost.value || percentPer.value || name.value || gain.value) {
                                 results = results.filter(({ c, p, T, g }) => {
@@ -85,7 +79,7 @@ class StockService {
 
                         return { resultData, status };
                 } catch (error) {
-                        logger.info(`${error.message}\n${error.stack}`);
+                        logger.info(`Exception: ${error.message}\n${error.stack}`);
                         throw error;
                 }
         }
@@ -93,95 +87,56 @@ class StockService {
         static async getAggregateStocks(query) {
                 try {
                         const { ticker, from, to } = query;
-
-                        logger.info(
-                                `About to call ${BASE_URL}/v2/aggs/ticker/${ticker}/range/1/day/${from}/${to}`
-                        );
-
-                        const result = await axios.get(
-                                `${BASE_URL}/v2/aggs/ticker/${ticker}/range/1/day/${from}/${to}`,
-                                {
-                                        params: {
-                                                adjusted: false,
-                                                sort: 'asc',
-                                                limit: '12',
-                                        },
-                                        headers: {
-                                                'Content-Type': 'application/json',
-                                                Authorization: `Bearer ${API_KEY}`,
-                                        },
-                                }
-                        );
+                        const endpoint = `/v2/aggs/ticker/${ticker}/range/1/day/${from}/${to}`;
+                        const result = await _axios.get(`${endpoint}`, {
+                                adjusted: false,
+                                sort: 'asc',
+                                limit: '12',
+                        });
 
                         return result;
                 } catch (error) {
-                        logger.info(`${error}\n${error.stack}`);
+                        logger.info(`Exception: ${error}\n${error.stack}`);
                         throw error;
                 }
         }
 
         static async getDailyOpenCloseStocks(query) {
-                logger.info(
-                        `About to call ${BASE_URL}/v1/open-close/${query.ticker}/${query.date}`
-                );
                 try {
-                        const result = await axios.get(
-                                `${BASE_URL}/v1/open-close/${query.ticker}/${query.date}`,
-                                {
-                                        params: {
-                                                adjusted: false,
-                                        },
-                                        headers: {
-                                                'Content-Type': 'application/json',
-                                                Authorization: `Bearer ${API_KEY}`,
-                                        },
-                                }
-                        );
+                        const endpoint = `/v1/open-close/${query.ticker}/${query.date}`;
+                        const result = await _axios.get(`${endpoint}`, {
+                                adjusted: false,
+                        });
                         return result;
                 } catch (error) {
-                        logger.info(`${error}\n${error.stack}`);
+                        logger.info(`Exception: ${error}\n${error.stack}`);
                         throw error;
                 }
         }
 
         static async getPreviousCloseStocks(query) {
                 try {
-                        const result = await axios.get(
-                                `${BASE_URL}/v2/aggs/ticker/${query.ticker}/prev`,
-                                {
-                                        params: {
-                                                adjusted: false,
-                                        },
-                                        headers: {
-                                                'Content-Type': 'application/json',
-                                                Authorization: `Bearer ${API_KEY}`,
-                                        },
-                                }
-                        );
+                        const endpoint = `/v2/aggs/ticker/${query.ticker}/prev`;
+                        const result = await _axios.get(`${endpoint}`, {
+                                adjusted: false,
+                        });
+
                         return result;
                 } catch (error) {
-                        logger.info(`${error}\n${error.stack}`);
+                        logger.info(`Exception: ${error.message}\n${error.stack}`);
                         throw error;
                 }
         }
 
         static async getStockTickerDetails(query) {
                 try {
-                        const result = await axios.get(
-                                `${BASE_URL}/v2/aggs/ticker/${query.ticker}/prev`,
-                                {
-                                        params: {
-                                                adjusted: false,
-                                        },
-                                        headers: {
-                                                'Content-Type': 'application/json',
-                                                Authorization: `Bearer ${API_KEY}`,
-                                        },
-                                }
-                        );
+                        const endpoint = `/v1/meta/symbols/${query.ticker}/company`;
+                        const result = await _axios.get(`${endpoint}`, {
+                                adjusted: false,
+                        });
                         return result;
                 } catch (error) {
-                        logger.info(`${error}\n${error.stack}`);
+                        logger.info(`Exception: ${error.message}\n${error.stack}`);
                         throw error;
                 }
         }
