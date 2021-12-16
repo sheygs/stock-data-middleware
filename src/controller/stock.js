@@ -2,7 +2,7 @@ import 'dotenv/config';
 import logger from '../utils/logger';
 import axios from 'axios';
 
-import {  clientQuery } from '../utils/helper';
+import { clientQuery } from '../utils/helper';
 
 import { sendSuccessResponse } from '../utils/responseHandler';
 
@@ -17,11 +17,9 @@ const { BASE_URL, API_KEY } = config;
 const getAggregateStocks = asyncMiddleware(async (req, res) => {
         const response = await StockService.getAggregateStocks(req.query);
 
-        logger.info(`response: ${JSON.stringify(response)}`);
-
         const { status, data } = response;
 
-        if (status === 200) return sendSuccessResponse(res, 200, data);
+       if (status === 200) return sendSuccessResponse(res, 200, data);
 });
 
 const groupedDailyStocks = asyncMiddleware(async (req, res) => {

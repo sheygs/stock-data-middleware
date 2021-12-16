@@ -1,23 +1,25 @@
 import 'dotenv/config';
 import logger from '../utils/logger';
 import axios from 'axios';
-import {
-        paginate,
-        handleMap,
-        extractValueOperator,
-        filterCondition,
-} from '../utils/helper';
+import { paginate, handleMap, extractValueOperator, filterCriteria } from '../utils/helper';
 
 import { config } from '../config/envConfig';
 
 const { BASE_URL, API_KEY } = config;
 
 class StockService {
-        static async getGroupedDailyStocks(query) {
+        static async getGroupedDailyStocks(query = {}) {
                 try {
                         logger.info(`req: ${JSON.stringify(query)}`);
 
-                        let { page = 1, limit = 10, cost, percentPer, gain, name } = query;
+                        let {
+                                page = 1,
+                                limit = 10,
+                                name = '',
+                                cost = { gte: '2' },
+                                percentPer = { lte: '3' },
+                                gain = { lte: '1' },
+                        } = query || {};
 
                         logger.info(
                                 `About to call ${BASE_URL}/v2/aggs/grouped/locale/us/market/stocks/2020-10-14`
@@ -49,63 +51,60 @@ class StockService {
                         logger.info(`${JSON.stringify({ cost, percentPer, name, gain })}`);
 
                         if (cost.value || percentPer.value || name.value || gain.value) {
-                                results = results.filter((result) => {
-                                        let filteredCondition;
+                                results = results.filter(({ c, p, T, g }) => {
+                                        let filteredCriteria;
 
                                         if (cost.value) {
-                                                filteredCondition = filterCondition(result.c, cost);
-                                                if (!filteredCondition) return;
+                                                filteredCriteria = filterCriteria(c, cost);
+                                                if (!filteredCriteria) return;
                                         }
 
                                         if (percentPer.value) {
-                                                filteredCondition = filterCondition(
-                                                        result.p,
-                                                        percentPer
-                                                );
+                                                filteredCriteria = filterCriteria(p, percentPer);
 
-                                                if (!filteredCondition) return;
+                                                if (!filteredCriteria) return;
                                         }
 
                                         if (name.value) {
-                                                filteredCondition = filterCondition(result.T, name);
+                                                filteredCriteria = filterCriteria(T, name);
 
-                                                if (!filteredCondition) return;
+                                                if (!filteredCriteria) return;
                                         }
 
                                         if (gain.value) {
-                                                filteredCondition = filterCondition(result.g, gain);
+                                                filteredCriteria = filterCriteria(g, gain);
 
-                                                if (!filteredCondition) return;
+                                                if (!filteredCriteria) return;
                                         }
 
-                                        return filteredCondition;
+                                        return filteredCriteria;
                                 });
                         }
 
                         const resultData = paginate(results, parseInt(page), parseInt(limit));
 
                         return { resultData, status };
-                } catch ({ message, code, stack }) {
-                        logger.info(`${message}`);
-                        throw message;
+                } catch (error) {
+                        logger.info(`${error.message}\n${error.stack}`);
+                        throw error;
                 }
         }
 
         static async getAggregateStocks(query) {
                 try {
-                        const { tickerId, from, to } = query;
+                        const { ticker, from, to } = query;
 
                         logger.info(
-                                `About to call ${BASE_URL}/v2/aggs/ticker/${tickerId}/range/1/day/${from}/${to}...`
+                                `About to call ${BASE_URL}/v2/aggs/ticker/${ticker}/range/1/day/${from}/${to}`
                         );
 
-                        const response = await axios.get(
-                                `${BASE_URL}/v2/aggs/ticker/${tickerId}/range/1/day/${from}/${to}`,
+                        const result = await axios.get(
+                                `${BASE_URL}/v2/aggs/ticker/${ticker}/range/1/day/${from}/${to}`,
                                 {
                                         params: {
                                                 adjusted: false,
                                                 sort: 'asc',
-                                                limit: '10',
+                                                limit: '12',
                                         },
                                         headers: {
                                                 'Content-Type': 'application/json',
@@ -114,9 +113,9 @@ class StockService {
                                 }
                         );
 
-                        return response;
+                        return result;
                 } catch (error) {
-                        logger.info(`${error}`);
+                        logger.info(`${error}\n${error.stack}`);
                         throw error;
                 }
         }

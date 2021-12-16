@@ -38,7 +38,7 @@ const extractValueOperator = (queryValue) => {
         }
 };
 
-const filterCondition = (actualValue, param) => {
+const filterCriteria = (actualValue, param) => {
         const { operator, value } = param;
         switch (operator) {
                 case 'lte': {
@@ -59,4 +59,4 @@ const filterCondition = (actualValue, param) => {
         }
 };
 
-export { paginate, clientQuery, handleMap, extractValueOperator, filterCondition };
+export { paginate, clientQuery, handleMap, extractValueOperator, filterCriteria };

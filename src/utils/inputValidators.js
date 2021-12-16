@@ -1,12 +1,17 @@
 import { param, query, validationResult } from 'express-validator';
 
 const validateTicker = [
-        query('tickerId').notEmpty().exists().withMessage('Ticker  must be provided'),
+        query('ticker')
+                .notEmpty()
+                .exists()
+                .isAlpha()
+                .isLength({ min: 2 })
+                .withMessage('Ticker stock  must be at least 2 characters'),
 ];
 const validateStartDate = [
-        query('from').notEmpty().exists().withMessage('Start Date must be provided'),
+        query('from').notEmpty().exists().withMessage('Start date must be provided'),
 ];
-const validateEndDate = [query('to').notEmpty().exists().withMessage('End Date must be provided')];
+const validateEndDate = [query('to').notEmpty().exists().withMessage('End date must be provided')];
 
 const validateGetStocks = [
         query('name')
