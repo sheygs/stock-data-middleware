@@ -51,6 +51,13 @@ const validateDailyOpenCloseDate = [
         param('date').notEmpty().exists().withMessage('start date must be provided'),
 ];
 
+const validateStockEntityReportStartDate = [
+        param('startDate').notEmpty().exists().withMessage('start date must be provided'),
+];
+const validateStockEntityReportEndDate = [
+        param('endDate').notEmpty().exists().withMessage('end date must be provided'),
+];
+
 const validationHandler = (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -68,6 +75,8 @@ const validations = {
         validateGetStocks,
         validateDailyOpenCloseTicker,
         validateDailyOpenCloseDate,
+        validateStockEntityReportStartDate,
+        validateStockEntityReportEndDate,
 };
 
 export default validations;

@@ -42,4 +42,12 @@ router.get(
         StockController.getStockTickerDetails
 );
 
+router.get(
+        '/stocks/report/:startDate/:endDate',
+        validator.validateStockEntityReportStartDate,
+        validator.validateStockEntityReportEndDate,
+        validator.validationHandler,
+        StockController.getStockReportEntity
+);
+
 export default router;
