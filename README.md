@@ -24,7 +24,7 @@
 - [Postman](https://www.postman.com/downloads/)
 - [Git](https://git-scm.com/downloads)
 
-### Rename _.env.sample_ to _.env_
+### Rename _.env.sample_ to _.env_ and replace the placeholders
 
 ```bash
  API_KEY=XXXXXXXXXXXXXXX
