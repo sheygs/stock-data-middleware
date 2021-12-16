@@ -119,6 +119,72 @@ class StockService {
                         throw error;
                 }
         }
+
+        static async getDailyOpenCloseStocks(query) {
+                logger.info(
+                        `About to call ${BASE_URL}/v1/open-close/${query.ticker}/${query.date}`
+                );
+                try {
+                        const result = await axios.get(
+                                `${BASE_URL}/v1/open-close/${query.ticker}/${query.date}`,
+                                {
+                                        params: {
+                                                adjusted: false,
+                                        },
+                                        headers: {
+                                                'Content-Type': 'application/json',
+                                                Authorization: `Bearer ${API_KEY}`,
+                                        },
+                                }
+                        );
+                        return result;
+                } catch (error) {
+                        logger.info(`${error}\n${error.stack}`);
+                        throw error;
+                }
+        }
+
+        static async getPreviousCloseStocks(query) {
+                try {
+                        const result = await axios.get(
+                                `${BASE_URL}/v2/aggs/ticker/${query.ticker}/prev`,
+                                {
+                                        params: {
+                                                adjusted: false,
+                                        },
+                                        headers: {
+                                                'Content-Type': 'application/json',
+                                                Authorization: `Bearer ${API_KEY}`,
+                                        },
+                                }
+                        );
+                        return result;
+                } catch (error) {
+                        logger.info(`${error}\n${error.stack}`);
+                        throw error;
+                }
+        }
+
+        static async getStockTickerDetails(query) {
+                try {
+                        const result = await axios.get(
+                                `${BASE_URL}/v2/aggs/ticker/${query.ticker}/prev`,
+                                {
+                                        params: {
+                                                adjusted: false,
+                                        },
+                                        headers: {
+                                                'Content-Type': 'application/json',
+                                                Authorization: `Bearer ${API_KEY}`,
+                                        },
+                                }
+                        );
+                        return result;
+                } catch (error) {
+                        logger.info(`${error}\n${error.stack}`);
+                        throw error;
+                }
+        }
 }
 
 export default StockService;

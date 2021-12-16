@@ -4,17 +4,6 @@ const paginate = (results = [], page = 1, limit = 10) => {
         return results.slice(start, end);
 };
 
-const clientQuery = (reqObj = {}) => {
-        let params = {};
-        const keys = Object.keys(reqObj);
-        for (let key of keys) {
-                if (reqObj[key]) {
-                        params[key] = reqObj[key];
-                }
-        }
-        return params;
-};
-
 const handleMap = ({ c, o, ...rest }) => {
         return {
                 c,
@@ -59,4 +48,4 @@ const filterCriteria = (actualValue, param) => {
         }
 };
 
-export { paginate, clientQuery, handleMap, extractValueOperator, filterCriteria };
+export { paginate, handleMap, extractValueOperator, filterCriteria };

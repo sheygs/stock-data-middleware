@@ -4,9 +4,9 @@ import logger from '../utils/logger';
 import StockEntityInstance from '../container/stock';
 
 const persistBestStocks = () => {
-        logger.info(`Job task runs every 5:30 AM...`);
+        logger.info('Job Scheduler runs every day at 12:00 AM...');
 
-        cron.schedule('00 30 05 * * *', async () => {
+        cron.schedule('0 0 0 * * *', async () => {
                 try {
                         const response = await StockService.getGroupedDailyStocks({});
 
@@ -33,8 +33,8 @@ const persistBestStocks = () => {
                                         result
                                 )}`
                         );
-                } catch ({ message, stack }) {
-                        logger.error(`${message}`, `\n${stack}`);
+                } catch (error) {
+                        logger.error(`Exception Error: ${error.message}`, `\n${error.stack}`);
                 }
         });
 };
