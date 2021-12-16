@@ -9,8 +9,8 @@ class StockEntityTable {
                 try {
                         const response = await this.stockEntityTable.create({ column, values });
                         return response;
-                } catch ({ message }) {
-                        throw message;
+                } catch (error) {
+                        throw error;
                 }
         }
 
@@ -18,8 +18,8 @@ class StockEntityTable {
                 try {
                         const response = await this.stockEntityTable.get({ column, condition });
                         return response;
-                } catch ({ message }) {
-                        throw message;
+                } catch (error) {
+                        throw error;
                 }
         }
 }
