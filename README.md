@@ -64,7 +64,7 @@
 | GET    | /open-close/:ticker/:date          | ticker, date                                  | YES            | Get Daily Open/Close     |
 | GET    | /ticker/:ticker/prev               | ticker                                        | YES            | Get Previous Close       |
 | GET    | /ticker/:ticker                    | ticker                                        | YES            | Get Ticker Details       |
-| GET    | /stocks/report/:startDate/:endDate | startDate, endDate                            | YES            | Get Stock Report         |
+| GET    | /stocks/report/:startDate/:endDate | startDate, endDate                            | NO             | Get Stock Report         |
 
 ### API Documentation
 
