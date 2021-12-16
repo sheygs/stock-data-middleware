@@ -8,15 +8,23 @@ class StockModel {
 
         async get(queryObj) {
                 const sqlStatement = `SELECT ${queryObj.column} FROM ${this.table} WHERE ${queryObj.condition}`;
+
                 const { rows } = await db.query(sqlStatement);
-                logger.info(`Rows: ${rows}`);
+
+                logger.info(`Rows: ${JSON.stringify(rows)}`);
+
                 return rows;
         }
 
         async create(queryObj) {
                 const sqlStatement = `INSERT INTO ${this.table} (${queryObj.column}) VALUES (${queryObj.values}) RETURNING *`;
+
+                logger.info(`${sqlStatement}`);
+
                 const result = await db.query(sqlStatement);
-                logger.info(`Rows: ${result.rows[0]}`);
+
+                logger.info(`Rows: ${JSON.stringify(result.rows[0])}`);
+
                 return result.rows[0];
         }
 }
