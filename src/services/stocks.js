@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import logger from '../utils/logger';
 import _axios from '../utils/_axios';
+import StockEntityTable from '../container/stock';
 import { paginate, handleMap, extractValueOperator, filterCriteria } from '../utils/helper';
 
 class StockService {
@@ -149,7 +150,7 @@ class StockService {
 
                         const conditions = `createdAt >= '${startDate}' and createdAt <= '${endDate}'`;
 
-                        const result = StockDataRepository.findAll(columns, conditions);
+                        const result = StockEntityTable.getAll(columns, conditions);
 
                         return result;
                 } catch (error) {
