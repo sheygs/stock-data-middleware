@@ -6,12 +6,15 @@ import middlewares from './startup/startup';
 import logging from './startup/logging';
 import { InvalidRoute } from './middleware/404';
 import { baseRoute } from './middleware/baseRoute';
+import production from './startup/prod';
 
 const app = express();
 
 logging();
 
 middlewares(app);
+
+production(app);
 
 // base path
 app.get('/', baseRoute);
