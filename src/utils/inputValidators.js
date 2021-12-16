@@ -6,12 +6,12 @@ const validateTicker = [
                 .exists()
                 .isAlpha()
                 .isLength({ min: 2 })
-                .withMessage('Ticker stock  must be at least 2 characters'),
+                .withMessage('stock ticker  must be at least 2 characters'),
 ];
 const validateStartDate = [
-        query('from').notEmpty().exists().withMessage('Start date must be provided'),
+        query('from').notEmpty().exists().withMessage('start date must be provided'),
 ];
-const validateEndDate = [query('to').notEmpty().exists().withMessage('End date must be provided')];
+const validateEndDate = [query('to').notEmpty().exists().withMessage('end date must be provided')];
 
 const validateGetStocks = [
         query('name')
@@ -19,23 +19,23 @@ const validateGetStocks = [
                 .notEmpty()
                 .isAlpha()
                 .isLength({ min: 3 })
-                .withMessage('Name must be at least 3 characters long'),
+                .withMessage('name must be at least 3 characters long'),
         query('limit')
                 .optional()
                 .notEmpty()
                 .isInt({ min: 1 })
-                .withMessage('Limit must be from 1 and above'),
+                .withMessage('limit must be from 1 and above'),
         query('page')
                 .optional()
                 .notEmpty()
                 .isInt({ min: 1 })
-                .withMessage('Limit must be from 1 and above'),
-        query('cost').optional().notEmpty().withMessage('Cost must be provided'),
+                .withMessage('limit must be from 1 and above'),
+        query('cost').optional().notEmpty().withMessage('cost value must be provided'),
         query('percentPer')
                 .optional()
                 .notEmpty()
-                .withMessage('Percent Performance must be provided'),
-        query('gain').optional().notEmpty().withMessage('Gain must be provided'),
+                .withMessage('percent performance value must be provided'),
+        query('gain').optional().notEmpty().withMessage('gain value must be provided'),
 ];
 
 const validateDailyOpenCloseTicker = [
@@ -44,11 +44,11 @@ const validateDailyOpenCloseTicker = [
                 .exists()
                 .isAlpha()
                 .isLength({ min: 2 })
-                .withMessage('Ticker stock  must be at least 2 characters'),
+                .withMessage('ticker stock  must be at least 2 characters'),
 ];
 
 const validateDailyOpenCloseDate = [
-        param('date').notEmpty().exists().withMessage('Start Date must be provided'),
+        param('date').notEmpty().exists().withMessage('start date must be provided'),
 ];
 
 const validationHandler = (req, res, next) => {
