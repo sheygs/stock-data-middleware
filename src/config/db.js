@@ -1,7 +1,7 @@
 const settings = (environment) => {
         return {
                 dialect: 'postgres',
-                envVariable: environment !== 'production' ? 'DEV_DB_URL' : 'PROD_DB_URL',
+                envVariable: environment !== 'production' ? 'DEV_DATABASE_URL' : 'DATABASE_URL',
         };
 };
 
