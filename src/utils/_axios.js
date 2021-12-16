@@ -4,7 +4,6 @@ const { API_KEY, BASE_URL } = config;
 import logger from './logger';
 import AppError from '../utils/error';
 
-
 const _axios = axios.create({
         baseURL: BASE_URL,
         headers: {
@@ -22,9 +21,9 @@ class Axios {
                                 },
                         });
                         return result;
-                } catch ({ message, code, stack }) {
-                        logger.info(`Exception: ${message} \n${stack}`);
-                        throw new AppError(message, code);
+                } catch (error) {
+                        logger.error(`Exception: ${error.message} \n${error.stack}`);
+                        throw new AppError(error.message, error.code);
                 }
         }
 }
