@@ -57,13 +57,14 @@
 
 `/api/v1/auth`
 
-| Method | Route                     | Parameter/Query                               | Authentication | Brief Description        |
-| ------ | ------------------------- | --------------------------------------------- | -------------- | ------------------------ |
-| GET    | /stocks/agg               | ticker,from,to                                | YES            | Get Aggregates (Bars)    |
-| GET    | /stocks                   | page, limit,cost, percentPer, gain/loss, name | YES            | Get Grouped Daily (Bars) |
-| GET    | /open-close/:ticker/:date | ticker, date                                  | YES            | Get Daily Open/Close     |
-| GET    | /ticker/:ticker/prev      | ticker                                        | YES            | Get Previous Close       |
-| GET    | /ticker/:ticker           | ticker                                        | YES            | Get Ticker Details       |
+| Method | Route                              | Parameter/Query                               | Authentication | Brief Description        |
+| ------ | ---------------------------------- | --------------------------------------------- | -------------- | ------------------------ |
+| GET    | /stocks/agg                        | ticker,from,to                                | YES            | Get Aggregates (Bars)    |
+| GET    | /stocks                            | page, limit,cost, percentPer, gain/loss, name | YES            | Get Grouped Daily (Bars) |
+| GET    | /open-close/:ticker/:date          | ticker, date                                  | YES            | Get Daily Open/Close     |
+| GET    | /ticker/:ticker/prev               | ticker                                        | YES            | Get Previous Close       |
+| GET    | /ticker/:ticker                    | ticker                                        | YES            | Get Ticker Details       |
+| GET    | /stocks/report/:startDate/:endDate | startDate, endDate                            | YES            | Get Stock Report         |
 
 ### API Documentation
 
@@ -300,6 +301,37 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
                         "employees": 123000,
                          ...
                 }
+        }
+]
+```
+
+#### GET /stocks/report/:startDate/:endDate
+
+- `Description:` Get Stock Entity Report.
+- Parameter: `startDate`, `endDate`
+- Parameter Description:
+
+```x-form-url-endcoded
+   startDate  - (required)
+   endDate  - (required)
+```
+
+- API REQUEST FORMAT:
+
+```x-form-url-encoded
+ {{BASE_URL}}/api/v1/auth/stocks/report/:startDate/:endDate
+```
+
+#### HTTP Response
+
+- HTTP Status: `200: success`
+- JSON data
+
+```json
+[
+        {
+                "status": "success",
+                "data": []
         }
 ]
 ```
