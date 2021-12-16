@@ -111,7 +111,7 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
                 "l": 149.82,
                 "t": 1635912000000,
                 "n": 399115
-            },
+            }
             ....
     }    ]
 }
