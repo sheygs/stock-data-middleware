@@ -93,7 +93,7 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
 - HTTP Status: `200: success`
 - JSON data
 
-```json
+````json
 {
     "status": "success",
     "data": {
@@ -112,10 +112,11 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
                 "t": 1635912000000,
                 "n": 399115
             }
-            ....
+
+            ```
     }    ]
 }
-```
+````
 
 #### GET /stocks
 
@@ -144,29 +145,30 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
 - HTTP Status: `200: success`
 - JSON data
 
-```json
+````json
 [
    {
-      "status": "success",
-      "data": [
-        {
-            "c": 27.51,
-            "o": 27.43,
-            "T": "OAKpA",
-            "v": 2796,
-            "vw": 27.679,
-            "h": 27.71,
-            "l": 27.43,
-            "t": 1602705600000,
-            "n": 62,
-            "g": "0.08",
-            "p": "0.29"
-        }
-        ...
-      ]
+             "status": "success",
+             "data": [
+              {
+                 "c": 27.51,
+                 "o": 27.43,
+                 "T": "OAKpA",
+                 "v": 2796,
+                 "vw": 27.679,
+                 "h": 27.71,
+                 "l": 27.43,
+                 "t": 1602705600000,
+                 "n": 62,
+                 "g": "0.08",
+                "p": "0.29"
+              }
+
+              ```
+          ]
    }
 ]
-```
+````
 
 #### GET /open-close/:ticker/:date
 
@@ -282,7 +284,7 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
 - HTTP Status: `200: success`
 - JSON data
 
-```json
+````json
 [
         {
                 "status": "success",
@@ -299,11 +301,12 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
                         "sector": "Technology",
                         "marketcap": 908316631180,
                         "employees": 123000,
-                         ...
+
+                         ```
                 }
         }
 ]
-```
+````
 
 #### GET /stocks/report/:startDate/:endDate
 
