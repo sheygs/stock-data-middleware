@@ -140,6 +140,23 @@ class StockService {
                         throw error;
                 }
         }
+
+        static async getStockReportEntity(query) {
+                try {
+                        const { startDate, endDate } = query;
+
+                        const columns = `tickerName, gain, cost, percentPerf, createdAt, timestamp`;
+
+                        const conditions = `createdAt >= '${startDate}' and createdAt <= '${endDate}'`;
+
+                        const result = StockDataRepository.findAll(columns, conditions);
+
+                        return result;
+                } catch (error) {
+                        logger.info(`Exception: ${error.message}\n${error.stack}`);
+                        throw error;
+                }
+        }
 }
 
 export default StockService;

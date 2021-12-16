@@ -4,7 +4,6 @@ import { sendSuccessResponse } from '../utils/responseHandler';
 import { asyncMiddleware } from '../middleware/async';
 import StockService from '../services/stocks';
 
-
 const getAggregateStocks = asyncMiddleware(async (req, res) => {
         const response = await StockService.getAggregateStocks(req.query);
 
@@ -47,12 +46,21 @@ const getStockTickerDetails = asyncMiddleware(async (req, res) => {
         if (status === 200) return sendSuccessResponse(res, 200, data);
 });
 
+const getStockReportEntity = asyncMiddleware(async (req, res) => {
+        const { status, data } = await StockService.getStockReportEntity(req.params);
+
+        logger.info(`Result: ${JSON.stringify(data)}`);
+
+        if (status === 200) return sendSuccessResponse(res, 200, data);
+});
+
 const StockController = {
         getAggregateStocks,
         groupedDailyStocks,
         getDailyOpenCloseStocks,
         getPreviousCloseStocks,
         getStockTickerDetails,
+        getStockReportEntity,
 };
 
 export default StockController;
