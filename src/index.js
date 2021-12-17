@@ -1,4 +1,4 @@
-import 'regenerator-runtime/runtime';
+import 'regenerator-runtime/runtime.js';
 import 'dotenv/config';
 import logger from './utils/logger';
 import express from 'express';
