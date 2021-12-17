@@ -1,4 +1,4 @@
-import '@babel/polyfill';
+import 'regenerator-runtime/runtime.js';
 import 'dotenv/config';
 import logger from './utils/logger';
 import express from 'express';
