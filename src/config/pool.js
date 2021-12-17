@@ -11,7 +11,7 @@ logger.info(`mode: ${mode}`);
 
 const envConfig = settings(mode);
 
-logger.info(`envConfig: ${envConfig}`);
+logger.info(`envConfig: ${JSON.stringify(envConfig)}`);
 
 const connectionUrl = process.env[envConfig.envVariable];
 
