@@ -5,7 +5,7 @@ import { settings } from './db';
 
 const { NODE_ENV } = process.env;
 
-const mode = 'development' || NODE_ENV;
+const mode = NODE_ENV || 'development';
 
 logger.info(`mode: ${mode}`);
 
