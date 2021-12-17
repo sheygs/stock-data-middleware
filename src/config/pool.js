@@ -7,7 +7,11 @@ const { NODE_ENV } = process.env;
 
 const mode = 'development' || NODE_ENV;
 
+logger.info(`mode: ${mode}`);
+
 const envConfig = settings(mode);
+
+logger.info(`envConfig: ${envConfig}`);
 
 const connectionUrl = process.env[envConfig.envVariable];
 
