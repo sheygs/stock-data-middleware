@@ -64,7 +64,7 @@ const filterCriteria = (actualValue, param) => {
                         return actualValue >= value;
                 }
 
-                case 'eql': {
+                case 'eq': {
                         return actualValue === value;
                 }
 
