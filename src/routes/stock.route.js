@@ -22,8 +22,8 @@ router.get(
 
 router.get(
         '/open-close/:ticker/:date',
-        validator.validateDailyOpenCloseDate,
         validator.validateDailyOpenCloseTicker,
+        validator.validateDailyOpenCloseDate,
         validator.validationHandler,
         StockController.getDailyOpenCloseStocks
 );
