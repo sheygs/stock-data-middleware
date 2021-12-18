@@ -17,6 +17,7 @@ const validateGetStocks = [
         query('name')
                 .optional()
                 .notEmpty()
+                .trim()
                 .isAlpha()
                 .isLength({ min: 2 })
                 .withMessage('stock ticker must be at least 2 characters long'),
