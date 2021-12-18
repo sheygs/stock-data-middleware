@@ -120,17 +120,27 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
 #### GET /stocks
 
 - `Description:` Get the daily open, high, low, and close (OHLC) for the entire stocks.
-- Queries: `page`, `limit`,`cost`, `percentPer`, `gain`, `name`
+- Pagination: `page`, `limit`,
+- Filtering: `cost`, `percentPer`, `gain`, `loss`, `name`
 - Query Description:
 
-```x-form-url-endcoded
+#### Pagination
+
+```x-form-url-encoded
    page (default - 1) - Current Page (optional)
-   limit (default - 10) - Result per Page (optional)
-   cost - Cost (optional)
-   percentPer  - Percent Performance (optional)
-   gain - Gain (optional)
-   loss - Loss (optional)
-   name  - Stock Ticker (optional)
+   limit (default - 10) - Results per Page (optional)
+```
+
+#### Filtration
+
+- Filteration is done using the **LHS Brackets**
+
+```x-form-url-encoded
+   cost[lte|gte|eq] - Cost (optional)
+   percentPer[lte|gte|eq]  - Percent Performance (optional)
+   gain[lte|gte|eq] - Gain (optional)
+   loss[lte|gte|eq] - Loss (optional)
+   name[lte|gte|eq]  - Stock Ticker (optional)
 ```
 
 - API REQUEST FORMAT:
