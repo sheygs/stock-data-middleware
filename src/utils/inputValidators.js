@@ -60,10 +60,13 @@ const validateGetStocks = [
                 .withMessage('page must be an integer from 1 and above'),
         query('cost')
                 .optional()
-                .notEmpty()
-                // .toInt()
-                // .isInt({ min: 1 })
-                .withMessage('cost value must be an integer from 1 and above'),
+                .custom((value) => {
+                        console.log('cost value: ', value);
+                        return value['gte'] || value['lte'] || value;
+                }),
+        // .toInt()
+        // .isInt({ min: 1 })
+        // .withMessage('cost value must be an integer from 1 and above'),
         query('percentPer')
                 .optional()
                 .notEmpty()

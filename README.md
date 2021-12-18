@@ -140,7 +140,7 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
    percentPer[lte|gte|eq]  - Percent Performance (optional)
    gain[lte|gte|eq] - Gain (optional)
    loss[lte|gte|eq] - Loss (optional)
-   name[lte|gte|eq]  - Stock Ticker (optional)
+   name  - Stock Ticker (optional)
 ```
 
 - API REQUEST FORMAT:
