@@ -1,4 +1,4 @@
-import { sendErrorResponse, sendResponse } from '../utils/responseHandler';
+import { sendErrorResponse, sendErrorResponseI } from '../utils/responseHandler';
 
 import logger from '../utils/logger';
 
@@ -19,7 +19,7 @@ const errorHandler = (error, req, res, next) => {
         }
         if (error.request) {
                 isDev && logger.error(`${error.message} \n${error.stack}`);
-                return sendResponse(res, error.message);
+                return sendErrorResponseI(res, error.message);
         }
 };
 
