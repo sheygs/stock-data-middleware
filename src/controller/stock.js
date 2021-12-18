@@ -5,12 +5,16 @@ import { asyncMiddleware } from '../middleware/async';
 import StockService from '../services/stocks';
 
 const getAggregateStocks = asyncMiddleware(async (req, res) => {
-        const response = await StockService.getAggregateStocks(req.query);
+        const { status, data } = await StockService.getAggregateStocks(req.query);
 
-        const { status, data } = response;
+        const { resultsCount } = data;
+
+        logger.info(`resultsCount: ${resultsCount}, status: ${status}`);
 
         if (status === 200)
-                return sendSuccessResponse(res, 200, 'Aggregate stocks retrieved', data);
+                return resultsCount
+                        ? sendSuccessResponse(res, 200, 'Aggregate stocks retrieved', data)
+                        : sendSuccessResponse(res, 200, 'No record exist for the moment', {});
 });
 
 const groupedDailyStocks = asyncMiddleware(async (req, res) => {
