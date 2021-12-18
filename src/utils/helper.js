@@ -1,7 +1,25 @@
 const paginate = (results = [], page = 1, limit = 10) => {
+        const totalCounts = results.length;
         const start = (page - 1) * limit;
         const end = page * limit;
-        return results.slice(start, end);
+        const items = results.slice(start, end);
+        const hasNextPage = limit * page < totalCounts;
+        const hasPreviousPage = page > 1;
+        const nextPage = page + 1;
+        const previousPage = page - 1;
+        const lastPage = Math.ceil(totalCounts / limit);
+
+        return {
+                totalCounts,
+                itemsPerPage: limit,
+                hasPreviousPage,
+                hasNextPage,
+                previousPage,
+                currentPage: page,
+                nextPage,
+                lastPage,
+                results: items,
+        };
 };
 
 const handleMap = ({ c, o, ...rest }) => {
