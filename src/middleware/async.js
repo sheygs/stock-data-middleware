@@ -3,7 +3,7 @@ export const asyncMiddleware = (fn) => {
                 try {
                         await fn(req, res);
                 } catch (err) {
-                        next(err);
+                        return next(err);
                 }
         };
 };

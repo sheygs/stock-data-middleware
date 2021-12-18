@@ -95,7 +95,7 @@ class StockService {
 
                         return { resultData, status };
                 } catch (error) {
-                        logger.info(`Exception: ${error.message}\n${error.stack}`);
+                        logger.error(`Exception: ${error.message}\n${error.stack}`);
                         throw error;
                 }
         }
@@ -112,7 +112,7 @@ class StockService {
 
                         return result;
                 } catch (error) {
-                        logger.info(`Exception: ${error}\n${error.stack}`);
+                        logger.error(`Exception: ${error}\n${error.stack}`);
                         throw error;
                 }
         }
@@ -125,7 +125,7 @@ class StockService {
                         });
                         return result;
                 } catch (error) {
-                        logger.info(`Exception: ${error}\n${error.stack}`);
+                        logger.error(`Exception: ${error}\n${error.stack}`);
                         throw error;
                 }
         }
@@ -139,7 +139,7 @@ class StockService {
 
                         return result;
                 } catch (error) {
-                        logger.info(`Exception: ${error.message}\n${error.stack}`);
+                        logger.error(`Exception: ${error.message}\n${error.stack}`);
                         throw error;
                 }
         }
@@ -152,7 +152,7 @@ class StockService {
                         });
                         return result;
                 } catch (error) {
-                        logger.info(`Exception: ${error.message}\n${error.stack}`);
+                        logger.error(`Exception: ${error.message}\n${error.stack}`);
                         throw error;
                 }
         }
@@ -171,7 +171,7 @@ class StockService {
 
                         return result;
                 } catch (error) {
-                        logger.info(`Exception: ${error.message}\n${error.stack}`);
+                        logger.error(`Exception: ${error.message}\n${error.stack}`);
                         throw error;
                 }
         }
