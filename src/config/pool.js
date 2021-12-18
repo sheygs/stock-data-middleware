@@ -13,20 +13,20 @@ const envConfig = settings(mode);
 
 logger.info(`envConfig: ${JSON.stringify(envConfig)}`);
 
-const connectionUrl = process.env[envConfig.envVariable];
+const connectionURL = process.env[envConfig.envVariable];
 
-logger.info(`DB ConnectionUrl: ${connectionUrl}`);
+logger.info(`DB ConnectionURL: ${connectionURL}`);
 
 const pool = new Pool({
-        connectionString: connectionUrl,
+        connectionString: connectionURL,
 });
 
 (async () => {
         try {
                 await pool.connect();
                 logger.info(`Successfully connected to ${mode} database...`);
-        } catch ({ message }) {
-                logger.error(`Unable to connect to ${mode} database...`, message);
+        } catch (error) {
+                logger.error(`Unable to connect to ${mode} database...`, error);
                 process.exit(1);
         }
 })();
