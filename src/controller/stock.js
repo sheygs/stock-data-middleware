@@ -11,13 +11,11 @@ const getAggregateStocks = asyncMiddleware(async (req, res) => {
 
         logger.info(`resultsCount: ${resultsCount}, status: ${status}`);
 
-        if (status === 200) {
-                const message = resultsCount
-                        ? 'Aggregate stocks retrieved'
-                        : 'No record exist for the moment';
-                const result = resultsCount ? data : {};
-                return sendSuccessResponse(res, status, message, result);
-        }
+        const message = resultsCount
+                ? 'Aggregate stocks retrieved'
+                : 'No record exist for the moment';
+        const result = resultsCount ? data : {};
+        return sendSuccessResponse(res, status, message, result);
 });
 
 const groupedDailyStocks = asyncMiddleware(async (req, res) => {
@@ -25,8 +23,12 @@ const groupedDailyStocks = asyncMiddleware(async (req, res) => {
 
         logger.info(`Result: ${JSON.stringify(resultData)}`);
 
-        if (status === 200)
-                return sendSuccessResponse(res, 200, 'Daily stocks retrieved', resultData);
+        if (status === 200) {
+                const message = resultData.results.length
+                        ? 'Daily stocks retrieved'
+                        : 'No record exist for the moment';
+                return sendSuccessResponse(res, 200, message, resultData);
+        }
 });
 
 const getDailyOpenCloseStocks = asyncMiddleware(async (req, res) => {

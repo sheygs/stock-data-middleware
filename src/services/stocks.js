@@ -2,7 +2,13 @@ import 'dotenv/config';
 import logger from '../utils/logger';
 import _axios from '../utils/_axios';
 import StockEntityInstance from '../container/stock';
-import { paginate, handleMap, extractValueOperator, filterCriteria } from '../utils/helper';
+import {
+        paginate,
+        paginateEmptyResult,
+        handleMap,
+        extractValueOperator,
+        filterCriteria,
+} from '../utils/helper';
 
 class StockService {
         static async getGroupedDailyStocks(query = {}) {
@@ -91,9 +97,12 @@ class StockService {
                                 });
                         }
 
-                        const resultData = paginate(results, parseInt(page), parseInt(limit));
-
-                        return { resultData, status };
+                        return {
+                                resultData: results.length
+                                        ? paginate(results, parseInt(page), parseInt(limit))
+                                        : paginateEmptyResult(),
+                                status,
+                        };
                 } catch (error) {
                         logger.error(`Exception: ${error.message}\n${error.stack}`);
                         throw error;

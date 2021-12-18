@@ -22,6 +22,13 @@ const paginate = (results = [], page = 1, limit = 10) => {
         };
 };
 
+const paginateEmptyResult = () => ({
+        totalCounts: 0,
+        results: [],
+        hasNextPage: false,
+        hasPreviousPage: false,
+});
+
 const handleMap = ({ c, o, ...rest }) => {
         return {
                 ...rest,
@@ -67,4 +74,4 @@ const filterCriteria = (actualValue, param) => {
         }
 };
 
-export { paginate, handleMap, extractValueOperator, filterCriteria };
+export { paginateEmptyResult, paginate, handleMap, extractValueOperator, filterCriteria };

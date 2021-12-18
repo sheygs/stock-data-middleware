@@ -21,6 +21,7 @@ const errorHandler = (error, req, res, next) => {
                 isDev && logger.error(`${error.message} \n${error.stack}`);
                 return sendErrorResponseI(res, error.message);
         }
+        next();
 };
 
 export default errorHandler;

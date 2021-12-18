@@ -61,26 +61,26 @@ const validateGetStocks = [
         query('cost')
                 .optional()
                 .notEmpty()
-                .toInt()
-                .isInt({ min: 1 })
+                // .toInt()
+                // .isInt({ min: 1 })
                 .withMessage('cost value must be an integer from 1 and above'),
         query('percentPer')
                 .optional()
                 .notEmpty()
-                .toInt()
-                .isInt({ min: 1 })
+                // .toInt()
+                // .isInt({ min: 1 })
                 .withMessage('percent performance value must be an integer from 1 and above'),
         query('gain')
                 .optional()
                 .notEmpty()
-                .toInt()
-                .isInt({ min: 1 })
+                // .toInt()
+                // .isInt({ min: 1 })
                 .withMessage('gain value must be an integer from 1 and above'),
         query('loss')
                 .optional()
                 .notEmpty()
-                .toInt()
-                .isInt({ min: 1 })
+                // .toInt()
+                // .isInt({ min: 1 })
                 .withMessage('loss value must be an integer from 1 and above'),
 ];
 
