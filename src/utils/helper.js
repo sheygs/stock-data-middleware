@@ -74,4 +74,43 @@ const filterCriteria = (actualValue, param) => {
         }
 };
 
-export { paginateEmptyResult, paginate, handleMap, extractValueOperator, filterCriteria };
+const customValidation = (value, { req }) => {
+        const key = Object.keys(req.query)[0];
+        if (typeof value === 'object') {
+                let obj = value;
+                if (obj['gte'] || obj['lte']) {
+                        if (+obj['gte'] >= 1 || +obj['lte'] >= 1) return true;
+                }
+                throw new Error(`${key} must have an integer value from 1 and above`);
+        }
+        if (!value) throw new Error(`${key} value cannot be empty`);
+        if (value > 0) return true;
+};
+
+const checkErrorMessage = (code) => {
+        switch (code) {
+                case 404: {
+                        return 'Not Found';
+                }
+
+                case 400: {
+                        return 'Bad Request';
+                }
+                case 500: {
+                        return 'Internal Server Error';
+                }
+                default: {
+                        return;
+                }
+        }
+};
+
+export {
+        paginateEmptyResult,
+        paginate,
+        handleMap,
+        extractValueOperator,
+        filterCriteria,
+        customValidation,
+        checkErrorMessage,
+};

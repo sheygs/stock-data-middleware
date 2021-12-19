@@ -1,7 +1,14 @@
+import { checkErrorMessage } from './helper';
+import logger from './logger';
+
 export const sendErrorResponse = (res, code, errorMessage) => {
+        const errMessage = checkErrorMessage(code) || errorMessage;
+
+        logger.info(`errorMessage: ${errMessage}`);
+
         res.status(code).send({
                 status: 'fail',
-                error: errorMessage,
+                error: errMessage,
         });
 };
 
@@ -17,11 +24,5 @@ export const sendBaseResponse = (res, code = 200, data = {}) => {
         res.status(code).send({
                 status: 'success',
                 data,
-        });
-};
-
-export const sendErrorResponseI = (res, message = 'An error occured. Please try again later.') => {
-        res.send({
-                message,
         });
 };

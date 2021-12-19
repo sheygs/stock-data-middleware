@@ -1,4 +1,5 @@
 import { param, query, validationResult } from 'express-validator';
+import { customValidation } from './helper';
 
 const validateTicker = [
         query('ticker')
@@ -49,39 +50,17 @@ const validateGetStocks = [
         query('limit')
                 .optional()
                 .notEmpty()
-                .toInt()
                 .isInt({ min: 1 })
                 .withMessage('result per page must be an integer from 1 and above'),
         query('page')
                 .optional()
                 .notEmpty()
-                .toInt()
                 .isInt({ min: 1 })
                 .withMessage('page must be an integer from 1 and above'),
-        query('cost')
-                .optional()
-                .notEmpty()
-                // .toInt()
-                // .isInt({ min: 1 })
-                .withMessage('cost value must be an integer from 1 and above'),
-        query('percentPer')
-                .optional()
-                .notEmpty()
-                // .toInt()
-                // .isInt({ min: 1 })
-                .withMessage('percent performance value must be an integer from 1 and above'),
-        query('gain')
-                .optional()
-                .notEmpty()
-                // .toInt()
-                // .isInt({ min: 1 })
-                .withMessage('gain value must be an integer from 1 and above'),
-        query('loss')
-                .optional()
-                .notEmpty()
-                // .toInt()
-                // .isInt({ min: 1 })
-                .withMessage('loss value must be an integer from 1 and above'),
+        query('cost').optional().custom(customValidation).exists(),
+        query('percentPer').optional().custom(customValidation).exists(),
+        query('gain').optional().custom(customValidation).exists(),
+        query('loss').optional().custom(customValidation).exists(),
 ];
 
 const validateDailyOpenCloseTicker = [
