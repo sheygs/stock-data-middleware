@@ -142,11 +142,11 @@ class StockService {
         static async getPreviousCloseStocks(query) {
                 try {
                         const endpoint = `/v2/aggs/ticker/${query.ticker}/prev`;
-                        const result = await _axios.get(`${endpoint}`, {
+                        const response = await _axios.get(`${endpoint}`, {
                                 adjusted: false,
                         });
 
-                        return result;
+                        return response;
                 } catch (error) {
                         logger.error(`Exception: ${error.message}\n${error.stack}`);
                         throw error;

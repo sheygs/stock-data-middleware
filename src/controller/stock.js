@@ -7,15 +7,9 @@ import StockService from '../services/stocks';
 const getAggregateStocks = asyncMiddleware(async (req, res) => {
         const { status, data } = await StockService.getAggregateStocks(req.query);
 
-        const { resultsCount } = data;
+        logger.info(`status: ${status}, data: ${JSON.stringify(data)}`);
 
-        logger.info(`resultsCount: ${resultsCount}, status: ${status}`);
-
-        const message = resultsCount
-                ? 'Aggregate stocks retrieved'
-                : 'No record exist for the moment';
-        const result = resultsCount ? data : {};
-        return sendSuccessResponse(res, status, message, result);
+        return sendSuccessResponse(res, status, 'Aggregate stocks retrieved', data);
 });
 
 const groupedDailyStocks = asyncMiddleware(async (req, res) => {
@@ -23,11 +17,13 @@ const groupedDailyStocks = asyncMiddleware(async (req, res) => {
 
         logger.info(`Result: ${JSON.stringify(resultData)}`);
 
+        const { results } = resultData;
+
         if (status === 200) {
-                const message = resultData.results.length
+                const message = results.length
                         ? 'Daily stocks retrieved'
                         : 'No record exist for the moment';
-                return sendSuccessResponse(res, 200, message, resultData);
+                return sendSuccessResponse(res, status, message, resultData);
         }
 });
 
@@ -36,7 +32,7 @@ const getDailyOpenCloseStocks = asyncMiddleware(async (req, res) => {
 
         logger.info(`Result: ${JSON.stringify(data)}`);
 
-        if (status === 200) return sendSuccessResponse(res, 200, 'Stock prices retrieved', data);
+        if (status === 200) return sendSuccessResponse(res, status, 'Stock prices retrieved', data);
 });
 
 const getPreviousCloseStocks = asyncMiddleware(async (req, res) => {
@@ -45,7 +41,7 @@ const getPreviousCloseStocks = asyncMiddleware(async (req, res) => {
         logger.info(`Result: ${JSON.stringify(data)}`);
 
         if (status === 200)
-                return sendSuccessResponse(res, 200, 'Previous close stocks retrieved', data);
+                return sendSuccessResponse(res, status, 'Previous close stocks retrieved', data);
 });
 
 const getStockTickerDetails = asyncMiddleware(async (req, res) => {
@@ -54,7 +50,7 @@ const getStockTickerDetails = asyncMiddleware(async (req, res) => {
         logger.info(`Result: ${JSON.stringify(data)}`);
 
         if (status === 200)
-                return sendSuccessResponse(res, 200, 'Stock ticker details retrieved', data);
+                return sendSuccessResponse(res, status, 'Stock ticker details retrieved', data);
 });
 
 const getStockReportEntity = asyncMiddleware(async (req, res) => {

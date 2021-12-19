@@ -4,6 +4,10 @@
     <p>A middleware service that exposes the <a href="http://polygon.io/">Polygon.io</a> Stock APIs</p>
   </p>
 
+### Hosted Endpoint
+
+- [Stock-Data-Middleware](https://stock-data-middleware.herokuapp.com)
+
 ### Features
 
 - Stock Data is available via an exposed API
@@ -136,10 +140,10 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
 - Filteration is done using the **LHS Brackets**
 
 ```x-form-url-encoded
-   cost[lte|gte|eq] - Cost (optional)
-   percentPer[lte|gte|eq]  - Percent Performance (optional)
-   gain[lte|gte|eq] - Gain (optional)
-   loss[lte|gte|eq] - Loss (optional)
+   cost[lte|gte] - Cost (optional)
+   percentPer[lte|gte]  - Percent Performance (optional)
+   gain[lte|gte] - Gain (optional)
+   loss[lte|gte] - Loss (optional)
    name  - Stock Ticker (optional)
 ```
 
