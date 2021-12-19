@@ -88,21 +88,20 @@ const customValidation = (value, { req }) => {
 };
 
 const checkErrorMessage = (code) => {
-        switch (code) {
-                case 404: {
-                        return 'Not Found';
-                }
+        const objLookUp = {
+                400: 'Bad Request',
+                401: 'Unauthorized',
+                403: 'Forbidden',
+                404: 'Not Found',
+                500: 'Internal Server Error',
+        };
+        return objLookUp[code];
+};
 
-                case 400: {
-                        return 'Bad Request';
-                }
-                case 500: {
-                        return 'Internal Server Error';
-                }
-                default: {
-                        return;
-                }
-        }
+const checkStatusCode = (message) => {
+        const errorCodes = ['400', '401', '403', '404', '500'];
+        let code = errorCodes.find((code) => message.includes(code) && code);
+        return Boolean(code) && +code;
 };
 
 export {
@@ -113,4 +112,5 @@ export {
         filterCriteria,
         customValidation,
         checkErrorMessage,
+        checkStatusCode,
 };

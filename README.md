@@ -372,6 +372,6 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
 ]
 ```
 
-### Hosted API Service
+#### Hosted API Service
 
 [Stock-Data-Middleware](https://stock-data-middleware.herokuapp.com)
