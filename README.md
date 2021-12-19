@@ -4,10 +4,6 @@
     <p>A middleware service that exposes the <a href="http://polygon.io/">Polygon.io</a> Stock APIs</p>
   </p>
 
-### Hosted Endpoint
-
-- [Stock-Data-Middleware](https://stock-data-middleware.herokuapp.com)
-
 ### Features
 
 - Stock Data is available via an exposed API
@@ -375,3 +371,7 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
         }
 ]
 ```
+
+### Hosted API Service
+
+[Stock-Data-Middleware](https://stock-data-middleware.herokuapp.com)
