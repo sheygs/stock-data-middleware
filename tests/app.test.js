@@ -10,7 +10,7 @@ describe('Application Entry', () => {
         test('Should display a message for invalid route paths', async () => {
                 const response = await request(server).get('/task').expect(404);
                 expect(response.body.status).toBe('fail');
-                expect(response.body.error).toBe('Unable to find the requested endpoint url.');
+                expect(response.body.error).toBe('Not Found');
         });
 });
 
