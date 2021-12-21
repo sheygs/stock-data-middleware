@@ -12,7 +12,7 @@ const _axios = axios.create({
 });
 
 class Axios {
-        static async get(endpoint, paramsObj) {
+        static async get(endpoint, paramsObj = {}) {
                 logger.info(`About to call ${BASE_URL}${endpoint}`);
                 try {
                         const result = await _axios.get(`${endpoint}`, {

@@ -30,7 +30,7 @@
  API_KEY=XXXXXXXXXXXXXXX
  BASE_URL=API_BASE_URL
  PORT=
- DEV_DB_URL=postgresql://user:password@host:port/dbname
+ DEV_DATABASE_URL=postgresql://user:password@host:port/dbname
 ```
 
 ### Installation 📦
