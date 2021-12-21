@@ -156,9 +156,7 @@ class StockService {
         static async getStockTickerDetails(query) {
                 try {
                         const endpoint = `/v1/meta/symbols/${query.ticker}/company`;
-                        const result = await _axios.get(`${endpoint}`, {
-                                adjusted: false,
-                        });
+                        const result = await _axios.get(`${endpoint}`);
                         return result;
                 } catch (error) {
                         logger.error(`Exception: ${error.message}\n${error.stack}`);
