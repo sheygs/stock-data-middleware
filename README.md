@@ -135,18 +135,22 @@ The API uses the `/api/v1/auth` endpoint for accessing the Stock Routes. The end
 
 - Filteration is done using the **LHS Brackets**
 
+`[lt]` - Less than or Equal to
+`[gt]` - Greater than or Equal to
+`[eq]` - Equal to
+
 ```x-form-url-encoded
-   cost[lte|gte] - Cost (optional)
-   percentPer[lte|gte]  - Percent Performance (optional)
-   gain[lte|gte] - Gain (optional)
-   loss[lte|gte] - Loss (optional)
+   cost[lt|gt] - Cost (optional)
+   percentPer[lt|gt]  - Percent Performance (optional)
+   gain[lt|gt] - Gain (optional)
+   loss[lt|gt] - Loss (optional)
    name  - Stock Ticker (optional)
 ```
 
 - API REQUEST FORMAT:
 
 ```x-form-url-encoded
- {{BASE_URL}}/api/v1/auth/stocks?page=2&limit=10&percentPer[lte]=1&gain[lte]=1
+ {{BASE_URL}}/api/v1/auth/stocks?page=2&limit=10&percentPer[lt]=1&gain[lt]=1
 ```
 
 #### HTTP Response

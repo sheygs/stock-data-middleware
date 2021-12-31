@@ -34,33 +34,33 @@ const handleMap = ({ c, o, ...rest }) => {
                 ...rest,
                 c,
                 o,
-                ls: Number(o - c).toFixed(2),
-                g: Number(c - o).toFixed(2),
-                p: (((Number(c) - Number(o)) / Number(o)) * 100).toFixed(2),
+                _loss: Number(o - c).toFixed(2),
+                _gain: Number(c - o).toFixed(2),
+                _percentPer: (((Number(c) - Number(o)) / Number(o)) * 100).toFixed(2),
         };
 };
 
 const extractValueOperator = (queryValue) => {
         if (typeof queryValue === 'object') {
-                if (queryValue['lte']) {
-                        return { value: queryValue['lte'], operator: 'lte' };
+                if (queryValue['lt']) {
+                        return { value: queryValue['lt'], operator: 'lt' };
                 }
-                if (queryValue['gte']) {
-                        return { value: queryValue['gte'], operator: 'gte' };
+                if (queryValue['gt']) {
+                        return { value: queryValue['gt'], operator: 'gt' };
                 }
         } else {
                 return { value: queryValue, operator: 'eq' };
         }
 };
 
-const filterCriteria = (actualValue, param) => {
+const criteria = (actualValue, param) => {
         const { operator, value } = param;
         switch (operator) {
-                case 'lte': {
+                case 'lt': {
                         return actualValue <= value;
                 }
 
-                case 'gte': {
+                case 'gt': {
                         return actualValue >= value;
                 }
 
@@ -78,8 +78,8 @@ const customValidation = (value, { req }) => {
         const key = Object.keys(req.query)[0];
         if (typeof value === 'object') {
                 let obj = value;
-                if (obj['gte'] || obj['lte']) {
-                        if (+obj['gte'] >= 1 || +obj['lte'] >= 1) return true;
+                if (obj['gt'] || obj['lt']) {
+                        if (+obj['gt'] >= 1 || +obj['lt'] >= 1) return true;
                 }
                 throw new Error(`${key} must have an integer value from 1 and above`);
         }
@@ -109,7 +109,7 @@ export {
         paginate,
         handleMap,
         extractValueOperator,
-        filterCriteria,
+        criteria,
         customValidation,
         checkErrorMessage,
         checkStatusCode,

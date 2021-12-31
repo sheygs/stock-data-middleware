@@ -7,11 +7,11 @@ import {
         paginateEmptyResult,
         handleMap,
         extractValueOperator,
-        filterCriteria,
+        criteria,
 } from '../utils/helper';
 
 class StockService {
-        static async getGroupedDailyStocks(query = {}) {
+        static async getGroupedDailyStocks(query) {
                 try {
                         logger.info(`Request Query: ${JSON.stringify(query)}`);
 
@@ -19,10 +19,10 @@ class StockService {
                                 page = 1,
                                 limit = 10,
                                 name = '',
-                                cost = { gte: '2' },
-                                percentPer = { lte: '3' },
-                                gain = { lte: '1' },
-                                loss = { lte: '1' },
+                                cost = { gt: '2' },
+                                percentPer = { lt: '3' },
+                                gain = { lt: '1' },
+                                loss = { lt: '1' },
                         } = query || {};
 
                         const endpoint = `/v2/aggs/grouped/locale/us/market/stocks/2020-10-14`;
@@ -61,39 +61,40 @@ class StockService {
                                 gain.value ||
                                 loss.value
                         ) {
-                                results = results.filter(({ c, p, T, g, ls }) => {
-                                        let filteredCriteria;
+                                results = results.filter(({ c, _percentPer, T, _gain, _loss }) => {
+                                        let outcome;
 
                                         if (cost.value) {
-                                                filteredCriteria = filterCriteria(c, cost);
-                                                if (!filteredCriteria) return;
+                                                outcome = criteria(c, cost);
+
+                                                if (!outcome) return;
                                         }
 
                                         if (percentPer.value) {
-                                                filteredCriteria = filterCriteria(p, percentPer);
+                                                outcome = criteria(_percentPer, percentPer);
 
-                                                if (!filteredCriteria) return;
+                                                if (!outcome) return;
                                         }
 
                                         if (name.value) {
-                                                filteredCriteria = filterCriteria(T, name);
+                                                outcome = criteria(T, name);
 
-                                                if (!filteredCriteria) return;
+                                                if (!outcome) return;
                                         }
 
                                         if (gain.value) {
-                                                filteredCriteria = filterCriteria(g, gain);
+                                                outcome = criteria(_gain, gain);
 
-                                                if (!filteredCriteria) return;
+                                                if (!outcome) return;
                                         }
 
                                         if (loss.value) {
-                                                filteredCriteria = filterCriteria(ls, loss);
+                                                outcome = criteria(_loss, loss);
 
-                                                if (!filteredCriteria) return;
+                                                if (!outcome) return;
                                         }
 
-                                        return filteredCriteria;
+                                        return outcome;
                                 });
                         }
 

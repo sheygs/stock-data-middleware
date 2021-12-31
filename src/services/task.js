@@ -39,12 +39,12 @@ const persistBestStocks = async () => {
         });
 };
 
-const handleStockPersistence = ({ T, g, ls, c, p, t }) => {
+const handleStockPersistence = ({ T, _gain, _loss, c, _percentPer, t }) => {
         logger.info(
-                `Name:${T},Gain: ${g}, Loss: ${ls}, Cost: ${c}, Percent Performance: ${p}, Timestamp: ${t}`
+                `Name:${T},Gain: ${_gain}, Loss: ${_loss}, Cost: ${c}, Percent Performance: ${_percentPer}, Timestamp: ${t}`
         );
         const columns = 'tickerName, gain, loss, cost, percentPerf, timestamp';
-        const values = `'${T}','${g}','${ls}','${c}','${p}','${t}'`;
+        const values = `'${T}','${_gain}','${_loss}','${c}','${_percentPer}','${t}'`;
         return StockEntityInstance.insert(columns, values);
 };
 
