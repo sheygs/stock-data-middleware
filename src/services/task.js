@@ -1,7 +1,7 @@
 import cron from 'node-cron';
 import StockService from './stocks';
 import logger from '../utils/logger';
-import StockEntityInstance from '../container/stock';
+import StockEntityInstance from '../repositories/stock';
 
 const persistBestStocks = async () => {
         logger.info('Job Scheduler runs every day at 12:00 AM...');

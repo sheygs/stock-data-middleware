@@ -7,6 +7,9 @@ import logging from './startup/logging';
 import { InvalidRoute } from './middleware/404';
 import { baseRoute } from './middleware/baseRoute';
 import production from './startup/prod';
+import { config } from './config/envConfig';
+
+const PORT = config.PORT;
 
 const app = express();
 
@@ -16,17 +19,12 @@ middlewares(app);
 
 production(app);
 
-// base path
 app.get('/', baseRoute);
 
 app.all('*', InvalidRoute);
 
-const { PORT } = process.env;
-
-const port = PORT;
-
-const server = app.listen(port, () =>
-        logger.info(`${app.get('env')}: server App listening on PORT ${port}...`)
+const server = app.listen(PORT, () =>
+        logger.info(`${app.get('env')}: server App listening on PORT ${PORT}...`)
 );
 
 export default server;

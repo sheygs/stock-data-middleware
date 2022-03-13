@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import logger from '../utils/logger';
 import _axios from '../utils/_axios';
-import StockEntityInstance from '../container/stock';
+import StockEntityInstance from '../repositories/stock';
 import {
         paginate,
         paginateEmptyResult,
